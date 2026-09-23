@@ -1,0 +1,186 @@
+[
+  {
+    "context": "汽车",
+    "expected": "油箱",
+    "strokes": [
+      {
+        "keys": "y",
+        "first": "与",
+        "elapsed_ms": 4.05
+      },
+      {
+        "keys": "yo",
+        "first": "用",
+        "elapsed_ms": 0.34
+      },
+      {
+        "keys": "you",
+        "first": "油",
+        "elapsed_ms": 0.36
+      },
+      {
+        "keys": "youx",
+        "first": "游戏",
+        "elapsed_ms": 0.39
+      },
+      {
+        "keys": "youxi",
+        "first": "游戏",
+        "elapsed_ms": 0.29
+      },
+      {
+        "keys": "youxia",
+        "first": "油匣",
+        "elapsed_ms": 45.65
+      },
+      {
+        "keys": "youxian",
+        "first": "有限",
+        "elapsed_ms": 41.48
+      },
+      {
+        "keys": "youxiang",
+        "first": "油箱",
+        "elapsed_ms": 43.92
+      }
+    ]
+  },
+  {
+    "context": "我现在",
+    "expected": "又想",
+    "strokes": [
+      {
+        "keys": "y",
+        "first": "要",
+        "elapsed_ms": 2.56
+      },
+      {
+        "keys": "yo",
+        "first": "有",
+        "elapsed_ms": 0.26
+      },
+      {
+        "keys": "you",
+        "first": "有",
+        "elapsed_ms": 0.14
+      },
+      {
+        "keys": "youx",
+        "first": "有些",
+        "elapsed_ms": 46.72
+      },
+      {
+        "keys": "youxi",
+        "first": "游戏",
+        "elapsed_ms": 43.48
+      },
+      {
+        "keys": "youxia",
+        "first": "有下",
+        "elapsed_ms": 40.93
+      },
+      {
+        "keys": "youxian",
+        "first": "有限",
+        "elapsed_ms": 0.98
+      },
+      {
+        "keys": "youxiang",
+        "first": "又想",
+        "elapsed_ms": 0.48
+      }
+    ]
+  },
+  {
+    "context": "请把附件发到我的",
+    "expected": "邮箱",
+    "strokes": [
+      {
+        "keys": "y",
+        "first": "预",
+        "elapsed_ms": 2.65
+      },
+      {
+        "keys": "yo",
+        "first": "郵",
+        "elapsed_ms": 0.22
+      },
+      {
+        "keys": "you",
+        "first": "郵",
+        "elapsed_ms": 0.14
+      },
+      {
+        "keys": "youx",
+        "first": "邮箱",
+        "elapsed_ms": 0.27
+      },
+      {
+        "keys": "youxi",
+        "first": "游戏",
+        "elapsed_ms": 42.23
+      },
+      {
+        "keys": "youxia",
+        "first": "邮下",
+        "elapsed_ms": 38.86
+      },
+      {
+        "keys": "youxian",
+        "first": "优先",
+        "elapsed_ms": 43.15
+      },
+      {
+        "keys": "youxiang",
+        "first": "邮箱",
+        "elapsed_ms": 0.3
+      }
+    ]
+  },
+  {
+    "context": "汽车",
+    "expected": "油箱",
+    "strokes": [
+      {
+        "keys": "y",
+        "first": "与",
+        "elapsed_ms": 2.15
+      },
+      {
+        "keys": "yo",
+        "first": "用",
+        "elapsed_ms": 0.22
+      },
+      {
+        "keys": "you",
+        "first": "油",
+        "elapsed_ms": 0.14
+      },
+      {
+        "keys": "youx",
+        "first": "游戏",
+        "elapsed_ms": 0.24
+      },
+      {
+        "keys": "youxi",
+        "first": "游戏",
+        "elapsed_ms": 0.19
+      },
+      {
+        "keys": "youxia",
+        "first": "油匣",
+        "elapsed_ms": 47.33
+      },
+      {
+        "keys": "youxian",
+        "first": "有限",
+        "elapsed_ms": 45.74
+      },
+      {
+        "keys": "youxiang",
+        "first": "油箱",
+        "elapsed_ms": 43.44
+      }
+    ]
+  }
+]

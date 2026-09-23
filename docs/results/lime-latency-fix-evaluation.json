@@ -1,0 +1,793 @@
+{
+  "count": 32,
+  "correct": 30,
+  "recalled": 31,
+  "results": [
+    {
+      "context": "汽车",
+      "pinyin": "youxiang",
+      "candidates": [
+        "邮箱",
+        "油箱",
+        "又想"
+      ],
+      "acceptable": [
+        "油箱"
+      ],
+      "actual": [
+        "油箱",
+        "邮箱",
+        "优享",
+        "油项",
+        "优相",
+        "优降",
+        "油象",
+        "油"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 176.06762500000002
+    },
+    {
+      "context": "请把附件发到我的",
+      "pinyin": "youxiang",
+      "candidates": [
+        "油箱",
+        "又想",
+        "邮箱"
+      ],
+      "acceptable": [
+        "邮箱"
+      ],
+      "actual": [
+        "邮箱",
+        "郵",
+        "邮",
+        "有",
+        "友",
+        "油",
+        "又",
+        "哟"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 95.87549999999999
+    },
+    {
+      "context": "我现在",
+      "pinyin": "youxiang",
+      "candidates": [
+        "油箱",
+        "邮箱",
+        "又想"
+      ],
+      "acceptable": [
+        "又想"
+      ],
+      "note": "用户示例，短前缀存在歧义",
+      "actual": [
+        "又想",
+        "有想",
+        "有向",
+        "邮箱",
+        "有像",
+        "又向",
+        "又像",
+        "有"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 173.96279200000004
+    },
+    {
+      "context": "伤口红肿，医生说已经",
+      "pinyin": "fayan",
+      "candidates": [
+        "发言",
+        "发炎"
+      ],
+      "acceptable": [
+        "发炎"
+      ],
+      "actual": [
+        "发炎",
+        "发烊",
+        "发养",
+        "发扬",
+        "发言",
+        "发",
+        "罚",
+        "法"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 142.29104099999995
+    },
+    {
+      "context": "接下来请代表上台",
+      "pinyin": "fayan",
+      "candidates": [
+        "发炎",
+        "发言"
+      ],
+      "acceptable": [
+        "发言"
+      ],
+      "actual": [
+        "发言",
+        "发扬",
+        "发",
+        "罚",
+        "法",
+        "發",
+        "髮",
+        "罰"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 93.32475
+    },
+    {
+      "context": "公司每月十号发放",
+      "pinyin": "gongzi",
+      "candidates": [
+        "公子",
+        "工资"
+      ],
+      "acceptable": [
+        "工资"
+      ],
+      "actual": [
+        "工资",
+        "共识",
+        "公子",
+        "红",
+        "公",
+        "工",
+        "供",
+        "共"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 93.85300000000007
+    },
+    {
+      "context": "古代富贵人家的",
+      "pinyin": "gongzi",
+      "candidates": [
+        "工资",
+        "公子"
+      ],
+      "acceptable": [
+        "公子"
+      ],
+      "actual": [
+        "公子",
+        "工资",
+        "共识",
+        "宫",
+        "功",
+        "供",
+        "共",
+        "公"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 89.54758300000003
+    },
+    {
+      "context": "无论你做什么决定，我都",
+      "pinyin": "zhichi",
+      "candidates": [
+        "智齿",
+        "支持"
+      ],
+      "acceptable": [
+        "支持"
+      ],
+      "actual": [
+        "支持",
+        "致辞",
+        "只吃",
+        "自此",
+        "只差",
+        "至此",
+        "只此",
+        "只"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 137.54366600000003
+    },
+    {
+      "context": "牙医建议拔掉这颗",
+      "pinyin": "zhichi",
+      "candidates": [
+        "支持",
+        "智齿"
+      ],
+      "acceptable": [
+        "智齿"
+      ],
+      "actual": [
+        "智齿",
+        "智齒",
+        "支持",
+        "智差",
+        "自此",
+        "至此",
+        "致辞",
+        "智"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 134.62145800000008
+    },
+    {
+      "context": "扫码完成订单",
+      "pinyin": "zhifu",
+      "candidates": [
+        "制服",
+        "致富",
+        "支付"
+      ],
+      "acceptable": [
+        "支付"
+      ],
+      "actual": [
+        "支付",
+        "字符",
+        "自负",
+        "制服",
+        "致富",
+        "自",
+        "子",
+        "至"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 83.80212499999993
+    },
+    {
+      "context": "警察穿着整齐的",
+      "pinyin": "zhifu",
+      "candidates": [
+        "支付",
+        "致富",
+        "制服"
+      ],
+      "acceptable": [
+        "制服"
+      ],
+      "actual": [
+        "制服",
+        "字符",
+        "致富",
+        "自负",
+        "支付",
+        "制",
+        "自",
+        "紫"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 86.17662500000006
+    },
+    {
+      "context": "乡亲们希望勤劳",
+      "pinyin": "zhifu",
+      "candidates": [
+        "制服",
+        "支付",
+        "致富"
+      ],
+      "acceptable": [
+        "致富"
+      ],
+      "actual": [
+        "致富",
+        "支付",
+        "自负",
+        "制服",
+        "字符",
+        "自",
+        "治",
+        "值"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 90.21266700000024
+    },
+    {
+      "context": "雷达准确地测出了目标的",
+      "pinyin": "fangwei",
+      "candidates": [
+        "方位",
+        "防卫"
+      ],
+      "acceptable": [
+        "方位"
+      ],
+      "actual": [
+        "方位",
+        "范围",
+        "防卫",
+        "反",
+        "泛",
+        "方",
+        "防",
+        "仿"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 91.16966700000012
+    },
+    {
+      "context": "明天早上去火车站",
+      "pinyin": "jieche",
+      "candidates": [
+        "接车",
+        "借车"
+      ],
+      "acceptable": [
+        "接车"
+      ],
+      "actual": [
+        "接车",
+        "接車",
+        "接测",
+        "结车",
+        "结車",
+        "结册",
+        "接",
+        "结"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 167.17954099999997
+    },
+    {
+      "context": "自己的车坏了，只好向朋友",
+      "pinyin": "jieche",
+      "candidates": [
+        "接车",
+        "借车"
+      ],
+      "acceptable": [
+        "借车"
+      ],
+      "actual": [
+        "借车",
+        "借車",
+        "借尺",
+        "借",
+        "家",
+        "接",
+        "结",
+        "解"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 140.31383400000004
+    },
+    {
+      "context": "节日广场上正在燃放",
+      "pinyin": "yanhua",
+      "candidates": [
+        "演化",
+        "烟花",
+        "眼花"
+      ],
+      "acceptable": [
+        "烟花"
+      ],
+      "actual": [
+        "烟花",
+        "氧化",
+        "演化",
+        "焰",
+        "烟",
+        "煙",
+        "延",
+        "扬"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 83.8394589999998
+    },
+    {
+      "context": "年龄大了，看小字容易",
+      "pinyin": "yanhua",
+      "candidates": [
+        "烟花",
+        "演化",
+        "眼花"
+      ],
+      "acceptable": [
+        "眼花"
+      ],
+      "actual": [
+        "眼花",
+        "氧化",
+        "演化",
+        "眼滑",
+        "烟花",
+        "眼化",
+        "眼",
+        "厌"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 125.05329200000006
+    },
+    {
+      "context": "科学家研究物种如何",
+      "pinyin": "yanhua",
+      "candidates": [
+        "眼花",
+        "烟花",
+        "演化"
+      ],
+      "acceptable": [
+        "演化"
+      ],
+      "actual": [
+        "演化",
+        "氧化",
+        "烟花",
+        "演",
+        "延",
+        "沿",
+        "养",
+        "仰"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 86.04925000000003
+    },
+    {
+      "context": "军队负责边境的",
+      "pinyin": "fangwei",
+      "candidates": [
+        "方位",
+        "防卫"
+      ],
+      "acceptable": [
+        "防卫"
+      ],
+      "actual": [
+        "防卫",
+        "范围",
+        "方位",
+        "防伪",
+        "反围",
+        "反伪",
+        "防衛",
+        "反维"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 174.33041700000012
+    },
+    {
+      "context": "老师在黑板上写下一道",
+      "pinyin": "gongshi",
+      "candidates": [
+        "公事",
+        "公式",
+        "工时"
+      ],
+      "acceptable": [
+        "公式"
+      ],
+      "actual": [
+        "公式",
+        "公示",
+        "公司",
+        "共识",
+        "攻势",
+        "红",
+        "公",
+        "工"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 93.00216600000022
+    },
+    {
+      "context": "这次出差是为了处理",
+      "pinyin": "gongshi",
+      "candidates": [
+        "工时",
+        "公式",
+        "公事"
+      ],
+      "acceptable": [
+        "公事"
+      ],
+      "actual": [
+        "公司",
+        "公示",
+        "公式",
+        "攻势",
+        "共识",
+        "公",
+        "工",
+        "共"
+      ],
+      "correct": false,
+      "recalled": false,
+      "elapsed_ms": 82.998333
+    },
+    {
+      "context": "项目经理统计员工的加班",
+      "pinyin": "gongshi",
+      "candidates": [
+        "公式",
+        "公事",
+        "工时"
+      ],
+      "acceptable": [
+        "工时"
+      ],
+      "actual": [
+        "工时",
+        "公司",
+        "工時",
+        "公示",
+        "工事",
+        "公式",
+        "共识",
+        "攻势"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 123.58537500000011
+    },
+    {
+      "context": "轮船缓缓驶入",
+      "pinyin": "gangkou",
+      "candidates": [
+        "港口",
+        "钢扣"
+      ],
+      "acceptable": [
+        "港口"
+      ],
+      "actual": [
+        "港口",
+        "港",
+        "钢",
+        "干",
+        "岗",
+        "刚",
+        "甘",
+        "感"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 86.99699999999984
+    },
+    {
+      "context": "这条皮带使用耐用的",
+      "pinyin": "gangkou",
+      "candidates": [
+        "港口",
+        "钢扣"
+      ],
+      "acceptable": [
+        "钢扣"
+      ],
+      "actual": [
+        "港口",
+        "钢扣",
+        "钢口",
+        "钢筘",
+        "感口",
+        "感扣",
+        "感叩",
+        "钢"
+      ],
+      "correct": false,
+      "recalled": true,
+      "elapsed_ms": 165.95016699999996
+    },
+    {
+      "context": "运动员打破了世界",
+      "pinyin": "jilu",
+      "candidates": [
+        "记录",
+        "纪录"
+      ],
+      "acceptable": [
+        "记录",
+        "纪录"
+      ],
+      "actual": [
+        "纪录",
+        "记录",
+        "紀錄",
+        "記錄",
+        "齐鲁",
+        "吉",
+        "忌",
+        "纪"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 85.78487500000028
+    },
+    {
+      "context": "每位学生都应该遵守课堂",
+      "pinyin": "jilv",
+      "candidates": [
+        "纪律",
+        "几率"
+      ],
+      "acceptable": [
+        "纪律"
+      ],
+      "actual": [
+        "纪律",
+        "几率",
+        "纪",
+        "集",
+        "及",
+        "机",
+        "既",
+        "即"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 95.205375
+    },
+    {
+      "context": "手机收到一条银行转账",
+      "pinyin": "tongzhi",
+      "candidates": [
+        "同志",
+        "通知",
+        "统治"
+      ],
+      "acceptable": [
+        "通知"
+      ],
+      "actual": [
+        "通知",
+        "同志",
+        "统治",
+        "通",
+        "同",
+        "统",
+        "铜",
+        "痛"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 87.6904169999998
+    },
+    {
+      "context": "古代皇帝实行专制",
+      "pinyin": "tongzhi",
+      "candidates": [
+        "通知",
+        "同志",
+        "统治"
+      ],
+      "acceptable": [
+        "统治"
+      ],
+      "actual": [
+        "统治",
+        "通知",
+        "同志",
+        "统",
+        "統",
+        "同",
+        "通",
+        "桐"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 83.19408299999986
+    },
+    {
+      "context": "新闻报道必须尊重",
+      "pinyin": "shishi",
+      "candidates": [
+        "事实",
+        "实时",
+        "实施"
+      ],
+      "acceptable": [
+        "事实"
+      ],
+      "actual": [
+        "事实",
+        "实施",
+        "实时",
+        "逝世",
+        "适时",
+        "史诗",
+        "硕士",
+        "十四"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 87.79262500000004
+    },
+    {
+      "context": "高铁到站以后，请拿好你的",
+      "pinyin": "xingli",
+      "candidates": [
+        "行礼",
+        "行李"
+      ],
+      "acceptable": [
+        "行李"
+      ],
+      "actual": [
+        "行李",
+        "心理",
+        "心里",
+        "心裡",
+        "行",
+        "新",
+        "信",
+        "心"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 94.1967910000003
+    },
+    {
+      "context": "学生见到老师，恭敬地鞠躬",
+      "pinyin": "xingli",
+      "candidates": [
+        "行李",
+        "行礼"
+      ],
+      "acceptable": [
+        "行礼"
+      ],
+      "actual": [
+        "行礼",
+        "行禮",
+        "心里",
+        "心理",
+        "行立",
+        "行李",
+        "心裡",
+        "行"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 125.14479200000005
+    },
+    {
+      "context": "项目计划已经开始",
+      "pinyin": "shishi",
+      "candidates": [
+        "事实",
+        "实时",
+        "实施"
+      ],
+      "acceptable": [
+        "实施"
+      ],
+      "actual": [
+        "实施",
+        "實施",
+        "实时",
+        "适时",
+        "四十",
+        "试试",
+        "时时",
+        "硕士"
+      ],
+      "correct": true,
+      "recalled": true,
+      "elapsed_ms": 83.19445799999994
+    }
+  ]
+}

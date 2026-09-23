@@ -118,6 +118,7 @@ export class LIME {
 
 	private last_result: Map<ExToken, number> | undefined;
 	private branchProbCache = new Map<string, Map<ExToken, number>>();
+	private lastCandidateKeys = "";
 	/** 长句补全，记录拼音和token对 */
 	private longSentenceCache: {
 		py: ZiIndL;
@@ -272,6 +273,7 @@ export class LIME {
 
 		this.longSentenceCache = [];
 		this.branchProbCache.clear();
+		this.lastCandidateKeys = "";
 
 		if (update) {
 			if (text.startsWith(this.last_context_data.context)) {
@@ -339,6 +341,7 @@ export class LIME {
 		this.last_context_data.context = "";
 		this.longSentenceCache = [];
 		this.branchProbCache.clear();
+		this.lastCandidateKeys = "";
 		await this.sequence.clearHistory();
 		await this.init_ctx();
 	};
@@ -714,16 +717,27 @@ export class LIME {
 	};
 
 	/**
-	 * Short-phrase beam search. A single vocabulary token (e.g. 邮箱) must not
+	 * Incremental phrase search. A single vocabulary token (e.g. 邮箱) must not
 	 * suppress a more likely multi-token phrase (油 + 箱 / 又 + 想).
+	 * Reuse prefix probabilities across keystrokes: at most one new model
+	 * evaluation for an adjacent key edit, two for a cold phrase or paste.
+	 * The time budget is soft: native evaluation cannot
+	 * be interrupted, but it must never trigger a chain of additional forwards.
 	 * Scores are path likelihoods; they are not calibrated correctness estimates.
 	 */
 	contextual_candidates = async (input: ZiIndL): Promise<Result> => {
 		if (input.length === 0) return { candidates: [] };
-		if (input.length > 4) return this.single_ci(input);
 		await this.modelEvalLock.acquire();
 		const { release } = await this.modelEvalLock.lock();
 		try {
+			const deadline = performance.now() + 50;
+			let evaluations = 0;
+			const keys = input.map((v) => v[0]?.key ?? "").join("");
+			const previous = this.lastCandidateKeys;
+			const incremental = previous && Math.abs(keys.length - previous.length) <= 1 &&
+				(keys.startsWith(previous) || previous.startsWith(keys));
+			const maxEvaluations = incremental ? 1 : 2;
+			this.lastCandidateKeys = keys;
 			await this.fastTryOmitContext(input.length);
 			if (!this.last_result) return { candidates: [] };
 			this.longSentenceCache = [];
@@ -740,8 +754,9 @@ export class LIME {
 					for (const id of this.first_pinyin_token.get(py.ind) ?? []) tokenIds.add(id);
 				}
 				const result: { token: ExToken; py: ZiIndAndKey[]; probability: number }[] = [];
-				for (const [token, probability] of probabilities) {
-					if (!tokenIds.has(token) || !Number.isFinite(probability) || probability <= 0) continue;
+				for (const token of tokenIds) {
+					const probability = probabilities.get(token);
+					if (probability === undefined || !Number.isFinite(probability) || probability <= 0) continue;
 					const spelling = this.token_pinyin_map.get(token);
 					if (!spelling) continue;
 					const py = ziid_in_ziid(remaining, spelling);
@@ -770,15 +785,23 @@ export class LIME {
 			for (const match of matches(input, this.last_result)) {
 				add({ tokens: [match.token], matched: match.py, score: match.probability });
 			}
-			for (let step = 0; step < 4 && pending.length; step++) {
+			// Keep every direct vocabulary candidate, but extend only the three most
+			// likely roots. Otherwise each new letter opens another weak root and
+			// spends the saved latency again on the next keystroke.
+			pending.splice(3);
+			for (let step = 0; step < 32 && pending.length; step++) {
 				pending.sort((a, b) => b.score - a.score);
 				const branch = pending.shift()!;
 				const bestFull = Math.max(0, ...Array.from(found.values()).filter((v) => v.pinyin.length === input.length).map((v) => v.score));
 				// A prefix likelihood is an upper bound on any of its continuations.
-				if (bestFull > 0 && branch.score < bestFull * 0.2) break;
+				if (bestFull > 0 && branch.score < bestFull) break;
 				const cacheKey = branch.tokens.join(",");
 				let next = this.branchProbCache.get(cacheKey);
 				if (!next) {
+					// Continue visiting cached paths after spending the budget. A cache
+					// miss on one branch must not hide an already computed longer phrase.
+					if (evaluations >= maxEvaluations || performance.now() >= deadline) continue;
+					evaluations++;
 					await erase();
 					const tokens = this.exTokens(branch.tokens);
 					const result = await this.sequence.controlledEvaluate([
@@ -788,7 +811,7 @@ export class LIME {
 					next = result.at(-1)?.next.probabilities;
 					if (next) {
 						this.branchProbCache.set(cacheKey, next);
-						if (this.branchProbCache.size > 12) this.branchProbCache.delete(this.branchProbCache.keys().next().value!);
+						if (this.branchProbCache.size > 24) this.branchProbCache.delete(this.branchProbCache.keys().next().value!);
 					}
 				}
 				if (!next) continue;
@@ -797,7 +820,7 @@ export class LIME {
 				}
 			}
 			await erase();
-			return { candidates: Array.from(found.values()).sort((a, b) => b.pinyin.length - a.pinyin.length || b.score - a.score) };
+			return { candidates: Array.from(found.values()).sort((a, b) => b.pinyin.length - a.pinyin.length || b.score - a.score).slice(0, 64) };
 		} finally {
 			release();
 		}

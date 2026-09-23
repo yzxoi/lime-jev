@@ -16,10 +16,18 @@ const cases = JSON.parse(await Deno.readTextFile("benchmarks/cases.json")) as {
   acceptable: string[];
 }[];
 const baseline = Deno.args.includes("--baseline");
+const typing = Deno.args.includes("--typing");
 const results = [];
 for (const c of cases) {
   const started = performance.now();
   await lime.set_context(c.context);
+  if (typing) {
+    for (let length = 1; length < c.pinyin.length; length++) {
+      await lime.contextual_candidates(
+        keys_to_pinyin(c.pinyin.slice(0, length)),
+      );
+    }
+  }
   const result = await (baseline
     ? lime.single_ci(keys_to_pinyin(c.pinyin))
     : lime.contextual_candidates(keys_to_pinyin(c.pinyin)));
@@ -42,7 +50,11 @@ for (const c of cases) {
   );
 }
 await Deno.writeTextFile(
-  baseline ? ".runtime/lime-baseline.json" : ".runtime/lime-evaluation.json",
+  baseline
+    ? ".runtime/lime-baseline.json"
+    : typing
+    ? ".runtime/lime-typing-evaluation.json"
+    : ".runtime/lime-evaluation.json",
   JSON.stringify(
     {
       count: results.length,

@@ -1,0 +1,250 @@
+[
+  {
+    "file": "latency-before-zero.tsv",
+    "target_keys": {
+      "count": 70,
+      "p50_ms": 33.356,
+      "p95_ms": 173.203,
+      "max_ms": 207.948,
+      "total_ms": 4437.692
+    },
+    "all_keys_including_prefix_and_space": {
+      "count": 110,
+      "p50_ms": 32.959,
+      "p95_ms": 174.507,
+      "max_ms": 219.122,
+      "total_ms": 6598.353
+    },
+    "space_commit_keys": {
+      "count": 8,
+      "p50_ms": 14.749,
+      "p95_ms": 15.316,
+      "max_ms": 15.316,
+      "total_ms": 116.416
+    },
+    "final_candidates": [
+      {
+        "round": 0,
+        "case": 0,
+        "keys": "youxiang",
+        "first": "油箱"
+      },
+      {
+        "round": 0,
+        "case": 1,
+        "keys": "youxiang",
+        "first": "又想"
+      },
+      {
+        "round": 0,
+        "case": 2,
+        "keys": "jintiantianqihenhao",
+        "first": "今天天气很好"
+      },
+      {
+        "round": 1,
+        "case": 0,
+        "keys": "youxiang",
+        "first": "油箱"
+      },
+      {
+        "round": 1,
+        "case": 1,
+        "keys": "youxiang",
+        "first": "又想"
+      },
+      {
+        "round": 1,
+        "case": 2,
+        "keys": "jintiantianqihenhao",
+        "first": "今天天气很好"
+      }
+    ]
+  },
+  {
+    "file": "latency-after-zero.tsv",
+    "target_keys": {
+      "count": 70,
+      "p50_ms": 50.642,
+      "p95_ms": 72.798,
+      "max_ms": 77.843,
+      "total_ms": 2934.869
+    },
+    "all_keys_including_prefix_and_space": {
+      "count": 110,
+      "p50_ms": 17.787,
+      "p95_ms": 72.622,
+      "max_ms": 107.886,
+      "total_ms": 4440.5
+    },
+    "space_commit_keys": {
+      "count": 8,
+      "p50_ms": 15.061,
+      "p95_ms": 16.696,
+      "max_ms": 16.696,
+      "total_ms": 119.71
+    },
+    "final_candidates": [
+      {
+        "round": 0,
+        "case": 0,
+        "keys": "youxiang",
+        "first": "油箱"
+      },
+      {
+        "round": 0,
+        "case": 1,
+        "keys": "youxiang",
+        "first": "又想"
+      },
+      {
+        "round": 0,
+        "case": 2,
+        "keys": "jintiantianqihenhao",
+        "first": "今天天气很好"
+      },
+      {
+        "round": 1,
+        "case": 0,
+        "keys": "youxiang",
+        "first": "油箱"
+      },
+      {
+        "round": 1,
+        "case": 1,
+        "keys": "youxiang",
+        "first": "又想"
+      },
+      {
+        "round": 1,
+        "case": 2,
+        "keys": "jintiantianqihenhao",
+        "first": "今天天气很好"
+      }
+    ]
+  },
+  {
+    "file": "latency-before-paced.tsv",
+    "target_keys": {
+      "count": 70,
+      "p50_ms": 37.182,
+      "p95_ms": 173.662,
+      "max_ms": 222.646,
+      "total_ms": 4561.348
+    },
+    "all_keys_including_prefix_and_space": {
+      "count": 110,
+      "p50_ms": 35.407,
+      "p95_ms": 177.37,
+      "max_ms": 222.646,
+      "total_ms": 6760.785
+    },
+    "space_commit_keys": {
+      "count": 8,
+      "p50_ms": 14.808,
+      "p95_ms": 16.767,
+      "max_ms": 16.767,
+      "total_ms": 120.377
+    },
+    "final_candidates": [
+      {
+        "round": 0,
+        "case": 0,
+        "keys": "youxiang",
+        "first": "油箱"
+      },
+      {
+        "round": 0,
+        "case": 1,
+        "keys": "youxiang",
+        "first": "又想"
+      },
+      {
+        "round": 0,
+        "case": 2,
+        "keys": "jintiantianqihenhao",
+        "first": "今天天气很好"
+      },
+      {
+        "round": 1,
+        "case": 0,
+        "keys": "youxiang",
+        "first": "油箱"
+      },
+      {
+        "round": 1,
+        "case": 1,
+        "keys": "youxiang",
+        "first": "又想"
+      },
+      {
+        "round": 1,
+        "case": 2,
+        "keys": "jintiantianqihenhao",
+        "first": "今天天气很好"
+      }
+    ]
+  },
+  {
+    "file": "latency-after-paced.tsv",
+    "target_keys": {
+      "count": 70,
+      "p50_ms": 20.752,
+      "p95_ms": 82.138,
+      "max_ms": 89.858,
+      "total_ms": 2950.453
+    },
+    "all_keys_including_prefix_and_space": {
+      "count": 110,
+      "p50_ms": 19.457,
+      "p95_ms": 76.946,
+      "max_ms": 89.858,
+      "total_ms": 4455.521
+    },
+    "space_commit_keys": {
+      "count": 8,
+      "p50_ms": 15.386,
+      "p95_ms": 17.459,
+      "max_ms": 17.459,
+      "total_ms": 122.937
+    },
+    "final_candidates": [
+      {
+        "round": 0,
+        "case": 0,
+        "keys": "youxiang",
+        "first": "油箱"
+      },
+      {
+        "round": 0,
+        "case": 1,
+        "keys": "youxiang",
+        "first": "又想"
+      },
+      {
+        "round": 0,
+        "case": 2,
+        "keys": "jintiantianqihenhao",
+        "first": "今天天气很好"
+      },
+      {
+        "round": 1,
+        "case": 0,
+        "keys": "youxiang",
+        "first": "油箱"
+      },
+      {
+        "round": 1,
+        "case": 1,
+        "keys": "youxiang",
+        "first": "又想"
+      },
+      {
+        "round": 1,
+        "case": 2,
+        "keys": "jintiantianqihenhao",
+        "first": "今天天气很好"
+      }
+    ]
+  }
+]

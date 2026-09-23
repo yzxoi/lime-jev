@@ -1,5 +1,7 @@
 # 0.1.0 验证记录
 
+下文保留 v0.1.0 发布时的测试。main 分支随后调整了逐键搜索预算与上下文准备方式，最新性能、选词回归和更新命令见 [延迟验证](LATENCY.md)。
+
 日期：2026-09-23。机器：Apple M3 Max、64 GiB 内存、macOS 26.6.2。Qwen3-0.6B IQ4_XS 使用 Metal；Laya multilingual 使用 MLX float16。模型版本与校验和见 [模型清单](../scripts/models.json)。
 
 ## 为什么默认不启用 Laya

@@ -121,6 +121,20 @@ def stop():
     print("Background services stopped. Run ./lime-jev start to enable them again.")
 
 
+def bootstrap(plist):
+    # launchd may acknowledge bootout before the old registration is fully gone.
+    # Retry its transient EIO on restart; keep genuine failures visible and bounded.
+    for delay in (0, 0.25, 0.5, 1, 2):
+        if delay:
+            time.sleep(delay)
+        result = subprocess.run(["launchctl", "bootstrap", DOMAIN, str(plist)], capture_output=True, text=True)
+        if result.returncode == 0:
+            return
+        if result.returncode != 5:
+            break
+    raise RuntimeError(f"Could not start {plist.stem}: {result.stderr.strip()}")
+
+
 def start():
     setup()
     for model in [ROOT / "models/laya/model.safetensors", ROOT / "models/lime/Qwen3-0.6B-IQ4_XS.gguf"]:
@@ -143,7 +157,7 @@ def start():
                                            "HF_HUB_OFFLINE": "1", "TOKENIZERS_PARALLELISM": "false", "PYTHONUNBUFFERED": "1"}}
         plist = AGENTS / f"{label}.plist"
         plist.write_bytes(plistlib.dumps(config))
-        subprocess.run(["launchctl", "bootstrap", DOMAIN, str(plist)], check=True)
+        bootstrap(plist)
     for _ in range(90):
         try:
             status = api("/api/status")

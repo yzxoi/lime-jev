@@ -1,0 +1,110 @@
+0	0	prefix	q	35.676	且
+0	0	prefix	qi	18.912	起
+0	0	prefix	qic	73.083	汽车
+0	0	prefix	qich	74.987	汽车
+0	0	prefix	qiche	71.695	汽车
+0	0	prefix	qiche 	15.002	
+0	0	target	y	17.823	与
+0	0	target	yo	16.673	用
+0	0	target	you	15.953	油
+0	0	target	youx	19.009	游戏
+0	0	target	youxi	18.468	游戏
+0	0	target	youxia	73.855	油匣
+0	0	target	youxian	68.113	有限
+0	0	target	youxiang	67.410	油箱
+0	1	prefix	w	68.637	为
+0	1	prefix	wo	15.337	我
+0	1	prefix	wo 	16.149	
+0	1	prefix	wo x	18.574	写
+0	1	prefix	wo xi	15.556	希
+0	1	prefix	wo xia	15.112	下
+0	1	prefix	wo xian	23.515	先
+0	1	prefix	wo xianz	74.370	现在
+0	1	prefix	wo xianza	70.186	先查
+0	1	prefix	wo xianzai	16.516	现在
+0	1	prefix	wo xianzai 	14.156	
+0	1	target	y	17.851	要
+0	1	target	yo	15.646	用
+0	1	target	you	17.969	有
+0	1	target	youx	89.858	有些
+0	1	target	youxi	65.635	游戏
+0	1	target	youxia	66.433	有下
+0	1	target	youxian	15.450	优先
+0	1	target	youxiang	15.762	又想
+0	2	prefix	w	66.451	为
+0	2	prefix	wo	14.450	我
+0	2	prefix	wo 	17.459	
+0	2	target	j	18.019	将
+0	2	target	ji	16.576	给
+0	2	target	jin	17.311	仅
+0	2	target	jint	26.071	今天
+0	2	target	jinti	72.866	警惕
+0	2	target	jintia	17.303	今天
+0	2	target	jintian	19.741	今天
+0	2	target	jintiant	72.497	今天特
+0	2	target	jintianti	71.371	今天提
+0	2	target	jintiantia	17.150	今天填
+0	2	target	jintiantian	17.385	今天填
+0	2	target	jintiantianq	15.690	今天天气
+0	2	target	jintiantianqi	20.296	今天天气
+0	2	target	jintiantianqih	85.731	今天天气好
+0	2	target	jintiantianqihe	72.493	今天天气和
+0	2	target	jintiantianqihen	73.286	今天天气很
+0	2	target	jintiantianqihenh	71.650	今天天气很好
+0	2	target	jintiantianqihenha	82.138	今天天气很哈
+0	2	target	jintiantianqihenhao	76.829	今天天气很好
+1	0	prefix	q	70.998	且
+1	0	prefix	qi	16.709	起
+1	0	prefix	qic	69.401	汽车
+1	0	prefix	qich	71.974	汽车
+1	0	prefix	qiche	70.191	汽车
+1	0	prefix	qiche 	14.505	
+1	0	target	y	18.452	与
+1	0	target	yo	16.228	用
+1	0	target	you	18.583	油
+1	0	target	youx	21.207	游戏
+1	0	target	youxi	23.876	游戏
+1	0	target	youxia	75.148	油匣
+1	0	target	youxian	74.456	有限
+1	0	target	youxiang	68.725	油箱
+1	1	prefix	w	71.647	为
+1	1	prefix	wo	15.676	我
+1	1	prefix	wo 	15.898	
+1	1	prefix	wo x	18.016	写
+1	1	prefix	wo xi	15.752	希
+1	1	prefix	wo xia	17.586	下
+1	1	prefix	wo xian	22.340	先
+1	1	prefix	wo xianz	76.946	现在
+1	1	prefix	wo xianza	68.865	先查
+1	1	prefix	wo xianzai	16.657	现在
+1	1	prefix	wo xianzai 	13.998	
+1	1	target	y	19.174	要
+1	1	target	yo	15.357	用
+1	1	target	you	16.447	有
+1	1	target	youx	68.890	有些
+1	1	target	youxi	71.237	游戏
+1	1	target	youxia	66.956	有下
+1	1	target	youxian	18.016	优先
+1	1	target	youxiang	18.237	又想
+1	2	prefix	w	70.002	为
+1	2	prefix	wo	16.314	我
+1	2	prefix	wo 	15.770	
+1	2	target	j	18.867	将
+1	2	target	ji	16.171	给
+1	2	target	jin	16.782	仅
+1	2	target	jint	16.854	今天
+1	2	target	jinti	71.303	警惕
+1	2	target	jintia	15.842	今天
+1	2	target	jintian	16.270	今天
+1	2	target	jintiant	71.785	今天特
+1	2	target	jintianti	74.609	今天提
+1	2	target	jintiantia	17.335	今天填
+1	2	target	jintiantian	18.428	今天填
+1	2	target	jintiantianq	33.623	今天天气
+1	2	target	jintiantianqi	25.703	今天天气
+1	2	target	jintiantianqih	83.871	今天天气好
+1	2	target	jintiantianqihe	74.221	今天天气和
+1	2	target	jintiantianqihen	73.684	今天天气很
+1	2	target	jintiantianqihenh	73.545	今天天气很好
+1	2	target	jintiantianqihenha	73.867	今天天气很哈
+1	2	target	jintiantianqihenhao	80.393	今天天气很好

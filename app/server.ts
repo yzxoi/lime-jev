@@ -26,15 +26,19 @@ const lime = await initLIME({
   ziInd: load_pinyin(),
   omitContext: false,
 });
-const controller = new Controller({
-  setContext: lime.set_context,
-  append: async (text) => {
-    await lime.commit(text);
-    await lime.getEvalResult();
+const controller = new Controller(
+  {
+    setContext: lime.set_context,
+    append: async (text) => {
+      await lime.commit(text);
+      await lime.getEvalResult();
+    },
+    candidates: async (keys) =>
+      (await lime.contextual_candidates(keys_to_pinyin(keys))).candidates,
   },
-  candidates: async (keys) =>
-    (await lime.contextual_candidates(keys_to_pinyin(keys))).candidates,
-}, new LocalRanker(`http://127.0.0.1:${workerPort}`, token, 100));
+  new LocalRanker(`http://127.0.0.1:${workerPort}`, token, 100),
+  "",
+);
 let activeApp = "";
 let focusWatchAt = 0;
 const json = (body: unknown, status = 200) =>
@@ -129,7 +133,7 @@ Deno.serve({ hostname: "127.0.0.1", port }, async (request) => {
       );
     }
     if (url.pathname === "/commit") {
-      controller.sessions.commit(session, string(body.text, 256));
+      controller.commit(session, string(body.text, 256));
       return json({ ok: true });
     }
     if (url.pathname === "/reset" || url.pathname === "/api/reset") {

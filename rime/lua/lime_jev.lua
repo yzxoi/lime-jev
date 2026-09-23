@@ -5,7 +5,10 @@ local M = { translator = {}, processor = {} }
 local function quote(s) return "'" .. tostring(s):gsub("'", "'\"'\"'") .. "'" end
 local function request(path, body)
   body.session = "rime"
-  local command = "curl --silent --connect-timeout 0.15 --max-time 1.5 --request POST --url " ..
+  -- This translator is synchronous. Bound exceptional stalls so the following
+  -- dictionary translator can run; ordinary candidate work is budgeted server-side.
+  local timeout = path == "/candidates" and "0.25" or "1.5"
+  local command = "curl --silent --connect-timeout 0.15 --max-time " .. timeout .. " --request POST --url " ..
     quote(config.url .. path) .. " --header " .. quote("Content-Type: application/json") ..
     " --header " .. quote("Authorization: Bearer " .. config.token) .. " --data " .. quote(json.encode(body)) .. " 2>/dev/null"
   local handle = io.popen(command)
