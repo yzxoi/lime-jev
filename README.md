@@ -34,10 +34,38 @@ xcode-select --install
 
 在鼠须管中按 **Control + `** 打开方案菜单，选择 **Lime · 本地语境**。先输入并确认前面的文字，再继续输入全拼。例如先上屏“汽车”，再输入 `youxiang`。
 
+## 设置为改进后的 lime（推荐）
+
+需要同时选择正确的**鼠须管方案**和**候选策略**。只在网页关闭 Laya，不会把正在使用的薄荷或其他 Rime 方案自动切换成本项目。
+
+1. 在 macOS 菜单栏的输入菜单中选择 **鼠须管 / Squirrel**。在一个可输入文字的地方按 **Control + `**（反引号），选择 **Lime · 本地语境**，方案 ID 为 `lime_jev`。原来的薄荷（`rime_mint`）和上游 lime 的 `llm` 方案都不是这个方案。
+2. 在项目目录运行下面的命令，将候选策略设为改进后的 lime。如果服务已运行，无需再次执行 `start`。
+
+   ```bash
+   ./lime-jev start
+   ./lime-jev use lime
+   ./lime-jev status
+   ```
+
+   `use lime` 会立即保存并应用设置，重启服务后仍然有效，不需要重新下载模型。该命令只切换候选策略；鼠须管方案按第 1 步选择。
+
+3. 也可以运行 `./lime-jev open`，在页面底部的 **输入法的候选策略** 中选择 **lime 语境词组（推荐）**。页面设置与命令行设置作用相同，同时影响本项目的鼠须管方案。
+4. 确认 `status` 显示 `Candidate strategy: lime 语境词组（推荐，Laya 重排已关闭）`，并检查 `Rime remembered schema: lime_jev`。后者是鼠须管保存的方案记录，不能代替当前应用中的实际输入检查。
+
+**`"backend": "off"` 表示关闭额外的 Laya 重排，改进后的 lime 仍然启用。** 本地 Qwen 模型、上下文评分、多 token 词组搜索和逐键缓存都会继续运行。即使状态中 Laya worker 显示 `ready: true`，也只表示它已加载；`backend: off` 时不会让它选择候选。
+
+验证方法：在同一个输入框里，先用本方案输入 `qiche` 并选择“汽车”上屏，再输入 `youxiang`，应看到“油箱”优先。清空文字和语境后，输入并上屏“我现在”，再输入 `youxiang`，应看到“又想”优先。请用输入法实际输入前文；直接粘贴的文字不会自动进入当前语境。网页测试则可以直接填入前文。
+
+如果方案菜单里找不到“Lime · 本地语境”，运行 `./lime-jev install-rime` 重新部署，然后再次打开方案菜单。若当前不是中文模式，按 Shift 切回中文。同一应用内点击切换输入框后，按 **Control + Shift + Backspace** 清空旧语境。
+
+已经安装 v0.1.0 的用户若没有 `use` 命令，可以先 `git pull --ff-only` 更新 main 分支，或直接用上述网页方式设置。若检出的是发布标签、处于 detached HEAD，则先 `git switch main` 再更新。
+
 ## 使用
 
 ```bash
 ./lime-jev open       # 打开本地控制页，比较上下文与候选
+./lime-jev use lime   # 改进后的 lime，关闭额外的 Laya 重排（推荐）
+./lime-jev use laya   # 开启 Laya 实验重排
 ./lime-jev status     # 查看模型及输入法部署状态
 ./lime-jev stop       # 停止后台服务，并取消自动启动
 ./lime-jev start      # 启动服务，并恢复登录时自动启动

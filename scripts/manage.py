@@ -197,13 +197,34 @@ def main():
     elif command == "open":
         api("/health")
         subprocess.run(["open", URL + "/#token=" + (RUNTIME / "token").read_text().strip()], check=True)
+    elif command == "use":
+        if len(sys.argv) != 3 or sys.argv[2] not in {"lime", "laya"}:
+            raise RuntimeError("Usage: ./lime-jev use {lime|laya}")
+        backend = "off" if sys.argv[2] == "lime" else "laya"
+        try:
+            result = api("/api/settings", {"backend": backend})
+        except (URLError, OSError, TimeoutError) as error:
+            raise RuntimeError("Service unavailable. Run ./lime-jev start, then retry.") from error
+        if not result.get("ok") or result.get("backend") != backend:
+            raise RuntimeError("The service did not confirm the candidate strategy.")
+        print("Candidate strategy:", "lime 语境词组（推荐，Laya 重排已关闭）" if backend == "off" else "Laya 重排（实验）")
+        print("Saved and applied immediately. In Squirrel, select Lime · 本地语境 (lime_jev).")
     elif command in {"status", "doctor"}:
         try:
-            print(json.dumps(api("/api/status"), ensure_ascii=False, indent=2))
+            status = api("/api/status")
+            print(json.dumps(status, ensure_ascii=False, indent=2))
         except (URLError, OSError, TimeoutError):
             print("Services are not ready. Run ./lime-jev start or ./lime-jev logs.")
             sys.exit(1)
+        print("Candidate strategy:", {"off": "lime 语境词组（推荐，Laya 重排已关闭）", "laya": "Laya 重排（实验）"}.get(status.get("backend"), "unknown"))
         print("Rime schema:", "built" if (RIME / "build/lime_jev.schema.yaml").exists() else "not deployed")
+        import yaml
+        try:
+            user = yaml.safe_load((RIME / "user.yaml").read_text()) or {}
+            selected = user.get("var", {}).get("previously_selected_schema", "unknown")
+        except (OSError, yaml.YAMLError, AttributeError):
+            selected = "unknown"
+        print("Rime remembered schema:", selected, "(saved preference, not a live application check)")
     elif command == "logs":
         for name in ["app", "worker", "focus"]:
             path = RUNTIME / f"{name}.log"
@@ -211,7 +232,7 @@ def main():
             if path.exists():
                 print("\n".join(path.read_text(errors="replace").splitlines()[-30:]))
     else:
-        print("Usage: ./lime-jev {install|start|stop|restart|status|doctor|open|logs|uninstall}")
+        print("Usage: ./lime-jev {install|start|stop|restart|status|doctor|open|logs|uninstall|use lime|use laya}")
 
 
 if __name__ == "__main__":
