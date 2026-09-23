@@ -1,0 +1,22 @@
+name: Checks
+on: [push, pull_request]
+jobs:
+  logic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.9.6
+      - run: deno install --frozen
+      - run: deno check app/server.ts
+      - run: deno lint app tests
+      - run: deno fmt --check app tests
+      - run: deno test -A tests key_map/pinyin/test utils/test/pinyin_in_pinyin.test.ts
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install PyYAML==6.0.3
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - run: python -m py_compile worker/*.py scripts/*.py benchmarks/*.py
+      - run: bash -n lime-jev scripts/install.sh

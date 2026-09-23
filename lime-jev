@@ -1,0 +1,11 @@
+#!/bin/bash
+set -euo pipefail
+cd "$(cd "$(dirname "$0")" && pwd)"
+if [[ "${1:-help}" == install ]]; then
+  exec /bin/bash scripts/install.sh
+fi
+if [[ ! -x .venv/bin/python ]]; then
+  echo 'Run ./lime-jev install first.' >&2
+  exit 1
+fi
+exec .venv/bin/python scripts/manage.py "${@:-help}"

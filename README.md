@@ -1,181 +1,110 @@
-# LIME
+# lime-jev
 
-llm 驱动的输入法。目前支持拼音。
+**让中文输入法根据正在写的内容，选择更合适的第一候选。**
 
-llm 常用的文本生成方式是自回归，也就是预测下一个词（token）的所有可能，然后通过某种方式采样选择某个可能，追加到模型输入，然后再次预测。这个项目，把词可能的选择采样交给了用户拼音，利用用户拼音来辅助采样。
+基于 [lime](https://github.com/xushengfeng/lime) 的本地拼音引擎，接入 [Laya](https://github.com/NandhaKishorM/laya) 多语言决策模型，通过 [laya-mlx](https://github.com/mizorewww/laya-mlx) 在 Apple Silicon 上运行。提供鼠须管输入方案、本地候选对照页面、后台服务和可回退的安装脚本。
 
-使用小型大模型 Qwen3-0.6B-IQ4_XS ，兼顾速度和联想能力，打字时速度和普通引擎基本无异。
+默认使用改进后的 lime 语境词组生成；Laya 为可切换的实验功能。两者都离线运行。
 
-python 版本的见[python 分支](https://github.com/xushengfeng/lime/tree/python)，此版本用 ts 重写。
+这是 0.1 系列的实验性桌面版本。候选选择仍会出错；请阅读 [测试与已知限制](docs/VALIDATION.md)。
 
-> [!CAUTION]
-> 本项目的结构是运行一个 ai 服务器，输入法前端发送按键数据到服务器计算，然后返回你选择的文字\
-> Rime 输入法前端可以使用 HiAE 对 `/candidates` 和 `/commit` 的请求与响应做加密认证\
-> 你的按键输入仍然可能包括了你大部分隐私，请不要把服务器暴露在公网或不可信局域网\
-> 如果关闭 HiAE 或使用开发 curl 示例，请只在本机可信环境中调试
+## macOS 快速安装
 
-## 运行
+需要 Apple Silicon Mac、macOS 14 或更新版本、Git、Apple 命令行开发工具，以及鼠须管。首次安装需要联网下载约 1 GB 模型，以及运行依赖；建议预留至少 3 GB 磁盘空间。之后推理全部在本机完成。
 
-需要有 deno.js 运行时，见[官网](https://deno.com/)
+已有鼠须管和 `uv` 的用户可以直接执行：
 
-下载本项目，建议通过命令`git clone https://github.com/xushengfeng/lime`，后续可以获取更新，当然也可以下载压缩包
-
-建议切换到某个tag使用，或者在release上下载某个tag，这些tag是验证过的版本而不是中途开发可能存在问题的代码。
-
-### 安装依赖
-
-```shell
-deno install
+```bash
+git clone https://github.com/yzxoi/lime-jev.git
+cd lime-jev
+./lime-jev install
 ```
 
-### 下载模型
+尚未准备环境时，使用 [Homebrew](https://brew.sh/) 安装：
 
-```shell
-git clone https://www.modelscope.cn/unsloth/Qwen3-0.6B-GGUF.git
+```bash
+brew install git uv deno
+brew install --cask squirrel
+xcode-select --install
 ```
 
-模型文件夹的位置和项目应该是同级的，当然你也可以修改代码
+如果已安装 Xcode 或命令行工具，无需重复运行最后一条命令。首次安装鼠须管后，在 **系统设置 → 键盘 → 文本输入 → 编辑** 中添加鼠须管；macOS 可能要求注销后重新登录。然后执行上面的项目安装命令。
 
-### 开启服务器
+安装脚本会下载固定版本并校验 SHA-256、准备 Python 环境、安装独立的 Rime 方案、备份涉及的配置、创建登录时启动的用户服务，并打开本地控制页。若没有全局 Deno，但有 npm，会在项目内安装 Deno 2.9.6。网络失败后可以重新运行，下载支持断点续传。
 
-```shell
-deno serve -A --port 5000 server.ts
+在鼠须管中按 **Control + `** 打开方案菜单，选择 **Lime · 本地语境**。先输入并确认前面的文字，再继续输入全拼。例如先上屏“汽车”，再输入 `youxiang`。
+
+## 使用
+
+```bash
+./lime-jev open       # 打开本地控制页，比较上下文与候选
+./lime-jev status     # 查看模型及输入法部署状态
+./lime-jev stop       # 停止后台服务，并取消自动启动
+./lime-jev start      # 启动服务，并恢复登录时自动启动
+./lime-jev restart
+./lime-jev logs       # 查看启动和错误日志
+./lime-jev uninstall  # 移除 Rime 集成和后台服务
 ```
 
-创建密钥，一定程度上防止被滥用或隐私泄露
+卸载保留项目内的模型与配置备份。服务运行期间请保留项目目录；需要移动目录时先 `stop`，移动后重新运行 `install`。
 
-```shell
-deno run -A key.ts
+本地控制页默认地址为 `http://127.0.0.1:17864`。通过 `./lime-jev open` 打开时会自动携带仅本机使用的访问密钥，密钥不进入服务器 URL 日志。可在页面切换候选策略。
+
+**清空语境：Control + Shift + Backspace。** 应用切换、常见的删除/光标移动、切换中英文模式与空闲超时都会使历史前缀失效。同一应用内用鼠标切换输入框，或外部程序修改文本时，当前版本无法可靠判断，请手动清空。
+
+## 如何工作
+
+```text
+鼠须管全拼输入
+  → lime / 本地 Qwen 生成合法拼音候选
+  → 当前会话的文字前缀 + 完整拼音候选
+  → 本地候选选择器
+  → 将所选候选移至第一位，用户确认后上屏
 ```
 
-如果只是先看看这个项目的效果，可以跳转到下面的[说明](#前端)
+- 对短拼音探索多 token 词组，使“油 + 箱”“又 + 想”等词组进入候选，使用上下文条件概率排序，并缓存逐键推理分支。
+- 保留候选的拼音消费长度与预编辑信息，所选词移动后，其他词的相对顺序不变。
+- 只在完整消费当前拼音的候选中做选择，避免将单字前缀与完整词组混排。
+- 模型不可用或超过等待预算时保留改进后的 lime 顺序；lime 服务也不可用时，鼠须管使用内置 `luna_pinyin` 作为基础输入回退。
+- 使用 Metal/MLX 推理，模型常驻，重复请求可从内存缓存返回。
+- 输入法提供全拼；双拼及任意编辑器的完整光标周边文本同步暂未作为本版本支持项。
 
-## 作为输入法
+## 本地数据
 
-这里使用[rime](https://rime.im/)作为前端。
+推理服务只监听 `127.0.0.1` 的 17864 和 17865 端口，并验证本地访问密钥。启动模型服务时设置 `HF_HUB_OFFLINE=1`。前缀与重排缓存只在内存中保存，应用服务不会把输入历史写入日志。
 
-复制项目 rime 文件夹里面的内容到你的 rime 输入法配置里面。可以修改`default.yaml`的`schema_list`，添加`-  schema: llm`，或者创建`default.custom.yaml`，内容如下：
+鼠须管自己的用户词典和学习行为遵循其原有设置；本方案启用了传统回退引擎的用户词典。
 
-```yaml
-patch:
-    schema_list/+:
-        - schema: llm
+模型位于 `models/`，密钥、日志、设置和 Rime 备份位于 `.runtime/`。这些目录已被 Git 忽略。应用切换辅助程序只读取应用标识，不读取窗口标题或编辑框内容，不需要辅助功能权限。
+
+## 开发与验证
+
+相关上游仓库在开发时克隆到 `.upstream/`，不作为子模块或发布内容；成品通过锁定的依赖与模型清单复现安装。
+
+```bash
+deno check app/server.ts
+deno lint app tests
+deno test -A tests key_map/pinyin/test utils/test/pinyin_in_pinyin.test.ts
+.venv/bin/python -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-总而言之，在rime里面启用`llm`这个schema。
+模型诊断使用仓库内的合成样例，候选选择与实际候选召回分开测量。为避免 GPU 竞争，先停止后台服务，再依次运行：
 
-确保系统安装了 [curl](https://curl.se/download.html)，大部分系统如Windows（win10 1803+）、Linux、macOS 都自带了。
-
-创建密钥`deno run -A key.ts`，只需要创建一次，把输出的密钥改写在`llm_pinyin.lua`的`key`变量里面。
-
-默认开启 HiAE 加密。还需要把`llm_pinyin.lua`中的`hiae_payload`改成 lime 项目里`hiae_payload.ts`的绝对路径，例如`/home/me/lime/hiae_payload.ts`。加密模式下 Lua 端不会发送明文 bearer key，服务端会用`key.txt`里保存的 key hash 验证并解密请求。
-
-如果需要临时回退到旧的明文 bearer 请求，可以把`llm_pinyin.lua`里的`enable_hiae`改成`false`。
-
-开启服务器，切换到 llm 拼音输入法即可使用。
-
-注意，并不能与你其他的 rime 输入法结合，只能作为一个新的 rime 输入法。
-
-## 特性
-
-除了 ai 优化，还有一些输入法特性：
-
-- 模糊音，可自定义转化表
-- 双拼（自然码、搜狗、微软、小鹤、智能 ABC、拼音加加、紫光，自定义）
-- `'`号分割拼音
-
-## 配置
-
-复制`config.ts`为`user_config.ts`，在`user_config.ts`里面修改配置。
-
-比如可以把`shuangpin`的值改成`false`或者改成其他双拼方案。
-
-建议使用现代的代码编辑器修改，比如 vscode、zed、neovim 等，它们提供代码检查，改配置时可以避免错误。
-
-## 现状
-
-长句的输入可能并不智能。
-
-输入太快可能会漏字母。
-
-没有保存数据的功能，也没有生词记录，所以服务器重启后会丢失记忆。
-
-## 理解与展望
-
-模型有的地方让人惊喜，有些候选又不合适地排在后面。总的来说，联想能力不输以前传统大厂的输入法，利好开源输入法，但 AI 时代竞争会更激烈，大厂的或者新加入的输入法会更智能。
-
-从拼音引导文字生成来看，人对语音的理解不是顺序的，是大体上顺序，小范围逆序，一些音的识别在后面才会有明确的结果或纠正。现在这个项目只能对部分置信度高的候选生成长词组，对于更长的长句，没有一定的把握是不会生成的。我了解到 fim 补全模式，这可以是一个方向，用它来表示没有把握的候选，但并不能提供拼音信息。有几种方向（AI 也告诉我了一些，我不是专业的，仅抛砖引玉），可以修改 mask，让拼音候选匹配的文字权重加大，占用位置编码，但不具体下来；类似翻译模型，前后关系在模型内部处理。为了更好补全，可以微调模型，减少其在指令遵循、编程相关的能力，提高其文学能力。另外发现不同的 token 粒度对置信度影响较大，在“ta de”中，“他的”是一个 token，但“他”和“的”各是一个 token，“他的”排名靠后，但“他”\*“的”的置信度还会更低，所以现在输入法采取长词优先，尽管这个不符合置信度排序。
-
-在应用方面来说，不同焦点的切换应该发生给模型以提示，否则容易串。删除或者光标改变也应该考虑。这些输入法框架应该具有相关功能，我研究一下。
-
-## 开发
-
-Rime 前端默认使用 HiAE 加密。下面的 curl 示例仍保留为本机开发调试用的明文接口，需要传入 bearer key。
-
-可以发送按键让引擎分析
-
-```shell
-curl --request POST \
-  --url http://127.0.0.1:5000/candidates \
-  --header 'content-type: application/json' \
-  --header 'Authorization: Bearer your key' \
-  --data '{
-  "keys": "nihaoshijie"
-}'
+```bash
+./lime-jev stop
+.venv/bin/python benchmarks/evaluate_laya.py
+deno run -A benchmarks/evaluate_lime.ts --baseline
+deno run -A benchmarks/evaluate_lime.ts
+deno run -A benchmarks/smoke.ts
+./lime-jev start
 ```
 
-返回
+这些是开发诊断，不能外推为日常输入准确率。模型配置和校验和见 [scripts/models.json](scripts/models.json)，实现设计与最初调研见 [RESEARCH.md](RESEARCH.md)。
 
-```json
-{
-    "candidates": [
-        {
-            "pinyin": ["ni", "hao", "shi", "jie"],
-            "score": 1.1879427571978856e-13,
-            "word": "你好世界"
-        }
-    ]
-}
-```
+## 致谢与许可证
 
-选好词后，发送，将作为上下文记录
+特别感谢 **[xushengfeng/lime](https://github.com/xushengfeng/lime)** 提供的拼音引擎、候选生成与 Rime 集成，以及 **[NandhaKishorM/laya](https://github.com/NandhaKishorM/laya)** 提供的开源多语言决策模型。也感谢 **[mizorewww/laya-mlx](https://github.com/mizorewww/laya-mlx)** 的 Apple Silicon 移植工作。
 
-```shell
-curl --request POST \
-  --url http://127.0.0.1:5000/commit \
-  --header 'content-type: application/json' \
-  --header 'Authorization: Bearer your key' \
-  --data '{
-  "text": "你好世界"
-}'
-```
+本项目保留 lime 的 Git 历史，衍生代码使用 **GPL-3.0**，见 [LICENSE](LICENSE)。依赖与模型保留各自许可证，完整来源说明见 [NOTICE.md](NOTICE.md)。
 
-### 其他输入方案
-
-添加类似`key_to_pinyin`的函数，用于把输入按键转换为文字索引，放在`key_map`文件夹下。添加类似`load_pinyin`的函数，提供把文字转为索引的方法。
-
-## 测试
-
-用deno运行`test/test_text.ts`，将会按照输入较长句子的拼音，然后去统计其索引、按键数、提交数量等记录下来，还提供了一个计算的交互方式，根据按键速度（kpm）等计算理论上的打字速度（cpm）等数据。
-
-## 统计
-
-服务器会尝试统计按键的速度（按照相邻请求来计算）、实际输入文字时间、查找候选的时间等，通过`/inputlog`可以获取，可以使用中位数等或者平均数计算你自己相关的打字数据。
-
-## 高级配置
-
-### 使用ollama的模型
-
-添加`import { getOllamaModel } from "./utils/load_from_ollama.ts";`
-
-`initLIME`的参数中设置`modelPath`，添加`getOllamaModel('模型名称')`，名称为`ollama list`命令列出的模型名称。
-
-## 前端
-
-执行`deno run install_interface`和`deno run build_interface`
-
-重启服务器
-
-访问 http://127.0.0.1:5000/demo.html?passwd=你的密码 将有个模拟平时输入法界面的页面
-
-其他界面在 http://127.0.0.1:5000 可以导航，如上下文获取、输入统计计算等
+本项目是独立社区实现，与 TypeSafe 无隶属关系，不包含专有 Jev 权重，不调用 Jev 云端 API。

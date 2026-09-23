@@ -1,0 +1,1052 @@
+{
+  "kind": "development diagnostic; curated candidates; not held-out",
+  "count": 32,
+  "correct": 22,
+  "order_stable": 23,
+  "p50_ms": 8.08,
+  "p95_ms": 11.4,
+  "results": [
+    {
+      "context": "汽车",
+      "pinyin": "youxiang",
+      "candidates": [
+        "邮箱",
+        "油箱",
+        "又想"
+      ],
+      "acceptable": [
+        "油箱"
+      ],
+      "result": {
+        "choice": "油箱",
+        "probabilities": {
+          "邮箱": 0.1071,
+          "油箱": 0.5526,
+          "又想": 0.3403
+        },
+        "elapsed_ms": 147.45,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "油箱",
+        "probabilities": {
+          "又想": 0.2046,
+          "油箱": 0.7358,
+          "邮箱": 0.0596
+        },
+        "elapsed_ms": 10.83,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "请把附件发到我的",
+      "pinyin": "youxiang",
+      "candidates": [
+        "油箱",
+        "又想",
+        "邮箱"
+      ],
+      "acceptable": [
+        "邮箱"
+      ],
+      "result": {
+        "choice": "邮箱",
+        "probabilities": {
+          "油箱": 0.1192,
+          "又想": 0.2471,
+          "邮箱": 0.6337
+        },
+        "elapsed_ms": 11.4,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "邮箱",
+        "probabilities": {
+          "邮箱": 0.6682,
+          "又想": 0.187,
+          "油箱": 0.1449
+        },
+        "elapsed_ms": 10.43,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "我现在",
+      "pinyin": "youxiang",
+      "candidates": [
+        "油箱",
+        "邮箱",
+        "又想"
+      ],
+      "acceptable": [
+        "又想"
+      ],
+      "note": "用户示例，短前缀存在歧义",
+      "result": {
+        "choice": "又想",
+        "probabilities": {
+          "油箱": 0.1073,
+          "邮箱": 0.1651,
+          "又想": 0.7276
+        },
+        "elapsed_ms": 6.46,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "邮箱",
+        "probabilities": {
+          "又想": 0.3274,
+          "邮箱": 0.5777,
+          "油箱": 0.0949
+        },
+        "elapsed_ms": 7.08,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": false
+    },
+    {
+      "context": "伤口红肿，医生说已经",
+      "pinyin": "fayan",
+      "candidates": [
+        "发言",
+        "发炎"
+      ],
+      "acceptable": [
+        "发炎"
+      ],
+      "result": {
+        "choice": "发炎",
+        "probabilities": {
+          "发言": 0.2262,
+          "发炎": 0.7738
+        },
+        "elapsed_ms": 7.1,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "发炎",
+        "probabilities": {
+          "发炎": 0.7351,
+          "发言": 0.2649
+        },
+        "elapsed_ms": 6.89,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "接下来请代表上台",
+      "pinyin": "fayan",
+      "candidates": [
+        "发炎",
+        "发言"
+      ],
+      "acceptable": [
+        "发言"
+      ],
+      "result": {
+        "choice": "发言",
+        "probabilities": {
+          "发炎": 0.3525,
+          "发言": 0.6475
+        },
+        "elapsed_ms": 6.85,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "发炎",
+        "probabilities": {
+          "发言": 0.1069,
+          "发炎": 0.8931
+        },
+        "elapsed_ms": 7.69,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": false
+    },
+    {
+      "context": "公司每月十号发放",
+      "pinyin": "gongzi",
+      "candidates": [
+        "公子",
+        "工资"
+      ],
+      "acceptable": [
+        "工资"
+      ],
+      "result": {
+        "choice": "公子",
+        "probabilities": {
+          "公子": 0.9983,
+          "工资": 0.0017
+        },
+        "elapsed_ms": 7.39,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "公子",
+        "probabilities": {
+          "工资": 0.0101,
+          "公子": 0.9899
+        },
+        "elapsed_ms": 7.29,
+        "backend": "laya"
+      },
+      "correct": false,
+      "order_stable": true
+    },
+    {
+      "context": "古代富贵人家的",
+      "pinyin": "gongzi",
+      "candidates": [
+        "工资",
+        "公子"
+      ],
+      "acceptable": [
+        "公子"
+      ],
+      "result": {
+        "choice": "公子",
+        "probabilities": {
+          "工资": 0.0232,
+          "公子": 0.9768
+        },
+        "elapsed_ms": 6.71,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "公子",
+        "probabilities": {
+          "公子": 0.9992,
+          "工资": 0.0008
+        },
+        "elapsed_ms": 6.83,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "无论你做什么决定，我都",
+      "pinyin": "zhichi",
+      "candidates": [
+        "智齿",
+        "支持"
+      ],
+      "acceptable": [
+        "支持"
+      ],
+      "result": {
+        "choice": "智齿",
+        "probabilities": {
+          "智齿": 0.6629,
+          "支持": 0.3371
+        },
+        "elapsed_ms": 7.43,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "智齿",
+        "probabilities": {
+          "支持": 0.3246,
+          "智齿": 0.6754
+        },
+        "elapsed_ms": 6.54,
+        "backend": "laya"
+      },
+      "correct": false,
+      "order_stable": true
+    },
+    {
+      "context": "牙医建议拔掉这颗",
+      "pinyin": "zhichi",
+      "candidates": [
+        "支持",
+        "智齿"
+      ],
+      "acceptable": [
+        "智齿"
+      ],
+      "result": {
+        "choice": "智齿",
+        "probabilities": {
+          "支持": 0.1338,
+          "智齿": 0.8662
+        },
+        "elapsed_ms": 6.48,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "智齿",
+        "probabilities": {
+          "智齿": 0.8711,
+          "支持": 0.1289
+        },
+        "elapsed_ms": 6.37,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "扫码完成订单",
+      "pinyin": "zhifu",
+      "candidates": [
+        "制服",
+        "致富",
+        "支付"
+      ],
+      "acceptable": [
+        "支付"
+      ],
+      "result": {
+        "choice": "致富",
+        "probabilities": {
+          "制服": 0.1283,
+          "致富": 0.6506,
+          "支付": 0.2212
+        },
+        "elapsed_ms": 8.55,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "致富",
+        "probabilities": {
+          "支付": 0.1741,
+          "致富": 0.5936,
+          "制服": 0.2322
+        },
+        "elapsed_ms": 8.37,
+        "backend": "laya"
+      },
+      "correct": false,
+      "order_stable": true
+    },
+    {
+      "context": "警察穿着整齐的",
+      "pinyin": "zhifu",
+      "candidates": [
+        "支付",
+        "致富",
+        "制服"
+      ],
+      "acceptable": [
+        "制服"
+      ],
+      "result": {
+        "choice": "制服",
+        "probabilities": {
+          "支付": 0.0944,
+          "致富": 0.308,
+          "制服": 0.5977
+        },
+        "elapsed_ms": 7.78,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "制服",
+        "probabilities": {
+          "制服": 0.5919,
+          "致富": 0.3372,
+          "支付": 0.0709
+        },
+        "elapsed_ms": 7.53,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "乡亲们希望勤劳",
+      "pinyin": "zhifu",
+      "candidates": [
+        "制服",
+        "支付",
+        "致富"
+      ],
+      "acceptable": [
+        "致富"
+      ],
+      "result": {
+        "choice": "致富",
+        "probabilities": {
+          "制服": 0.1231,
+          "支付": 0.3399,
+          "致富": 0.537
+        },
+        "elapsed_ms": 8.52,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "致富",
+        "probabilities": {
+          "致富": 0.4829,
+          "支付": 0.3635,
+          "制服": 0.1536
+        },
+        "elapsed_ms": 7.78,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "雷达准确地测出了目标的",
+      "pinyin": "fangwei",
+      "candidates": [
+        "方位",
+        "防卫"
+      ],
+      "acceptable": [
+        "方位"
+      ],
+      "result": {
+        "choice": "防卫",
+        "probabilities": {
+          "方位": 0.4815,
+          "防卫": 0.5185
+        },
+        "elapsed_ms": 7.51,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "防卫",
+        "probabilities": {
+          "防卫": 0.5107,
+          "方位": 0.4893
+        },
+        "elapsed_ms": 8.11,
+        "backend": "laya"
+      },
+      "correct": false,
+      "order_stable": true
+    },
+    {
+      "context": "明天早上去火车站",
+      "pinyin": "jieche",
+      "candidates": [
+        "接车",
+        "借车"
+      ],
+      "acceptable": [
+        "接车"
+      ],
+      "result": {
+        "choice": "借车",
+        "probabilities": {
+          "接车": 0.398,
+          "借车": 0.602
+        },
+        "elapsed_ms": 6.84,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "接车",
+        "probabilities": {
+          "借车": 0.3421,
+          "接车": 0.6579
+        },
+        "elapsed_ms": 6.94,
+        "backend": "laya"
+      },
+      "correct": false,
+      "order_stable": false
+    },
+    {
+      "context": "自己的车坏了，只好向朋友",
+      "pinyin": "jieche",
+      "candidates": [
+        "接车",
+        "借车"
+      ],
+      "acceptable": [
+        "借车"
+      ],
+      "result": {
+        "choice": "借车",
+        "probabilities": {
+          "接车": 0.3901,
+          "借车": 0.6099
+        },
+        "elapsed_ms": 8.32,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "接车",
+        "probabilities": {
+          "借车": 0.2937,
+          "接车": 0.7063
+        },
+        "elapsed_ms": 7.77,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": false
+    },
+    {
+      "context": "节日广场上正在燃放",
+      "pinyin": "yanhua",
+      "candidates": [
+        "演化",
+        "烟花",
+        "眼花"
+      ],
+      "acceptable": [
+        "烟花"
+      ],
+      "result": {
+        "choice": "烟花",
+        "probabilities": {
+          "演化": 0.2788,
+          "烟花": 0.6574,
+          "眼花": 0.0637
+        },
+        "elapsed_ms": 7.86,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "演化",
+        "probabilities": {
+          "眼花": 0.0543,
+          "烟花": 0.4488,
+          "演化": 0.4968
+        },
+        "elapsed_ms": 7.8,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": false
+    },
+    {
+      "context": "年龄大了，看小字容易",
+      "pinyin": "yanhua",
+      "candidates": [
+        "烟花",
+        "演化",
+        "眼花"
+      ],
+      "acceptable": [
+        "眼花"
+      ],
+      "result": {
+        "choice": "演化",
+        "probabilities": {
+          "烟花": 0.083,
+          "演化": 0.8039,
+          "眼花": 0.1131
+        },
+        "elapsed_ms": 8.21,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "演化",
+        "probabilities": {
+          "眼花": 0.0949,
+          "演化": 0.7975,
+          "烟花": 0.1076
+        },
+        "elapsed_ms": 8.85,
+        "backend": "laya"
+      },
+      "correct": false,
+      "order_stable": true
+    },
+    {
+      "context": "科学家研究物种如何",
+      "pinyin": "yanhua",
+      "candidates": [
+        "眼花",
+        "烟花",
+        "演化"
+      ],
+      "acceptable": [
+        "演化"
+      ],
+      "result": {
+        "choice": "演化",
+        "probabilities": {
+          "眼花": 0.0556,
+          "烟花": 0.1339,
+          "演化": 0.8105
+        },
+        "elapsed_ms": 7.92,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "演化",
+        "probabilities": {
+          "演化": 0.8065,
+          "烟花": 0.1289,
+          "眼花": 0.0645
+        },
+        "elapsed_ms": 8.37,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "军队负责边境的",
+      "pinyin": "fangwei",
+      "candidates": [
+        "方位",
+        "防卫"
+      ],
+      "acceptable": [
+        "防卫"
+      ],
+      "result": {
+        "choice": "防卫",
+        "probabilities": {
+          "方位": 0.0659,
+          "防卫": 0.9341
+        },
+        "elapsed_ms": 7.21,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "防卫",
+        "probabilities": {
+          "防卫": 0.6593,
+          "方位": 0.3407
+        },
+        "elapsed_ms": 8.45,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "老师在黑板上写下一道",
+      "pinyin": "gongshi",
+      "candidates": [
+        "公事",
+        "公式",
+        "工时"
+      ],
+      "acceptable": [
+        "公式"
+      ],
+      "result": {
+        "choice": "公式",
+        "probabilities": {
+          "公事": 0.1448,
+          "公式": 0.5807,
+          "工时": 0.2745
+        },
+        "elapsed_ms": 8.26,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "公式",
+        "probabilities": {
+          "工时": 0.1964,
+          "公式": 0.6432,
+          "公事": 0.1604
+        },
+        "elapsed_ms": 8.43,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "这次出差是为了处理",
+      "pinyin": "gongshi",
+      "candidates": [
+        "工时",
+        "公式",
+        "公事"
+      ],
+      "acceptable": [
+        "公事"
+      ],
+      "result": {
+        "choice": "公式",
+        "probabilities": {
+          "工时": 0.1559,
+          "公式": 0.4467,
+          "公事": 0.3973
+        },
+        "elapsed_ms": 7.95,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "公式",
+        "probabilities": {
+          "公事": 0.1296,
+          "公式": 0.4871,
+          "工时": 0.3833
+        },
+        "elapsed_ms": 8.19,
+        "backend": "laya"
+      },
+      "correct": false,
+      "order_stable": true
+    },
+    {
+      "context": "项目经理统计员工的加班",
+      "pinyin": "gongshi",
+      "candidates": [
+        "公式",
+        "公事",
+        "工时"
+      ],
+      "acceptable": [
+        "工时"
+      ],
+      "result": {
+        "choice": "工时",
+        "probabilities": {
+          "公式": 0.0144,
+          "公事": 0.0381,
+          "工时": 0.9475
+        },
+        "elapsed_ms": 8.72,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "工时",
+        "probabilities": {
+          "工时": 0.763,
+          "公事": 0.179,
+          "公式": 0.058
+        },
+        "elapsed_ms": 8.06,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "轮船缓缓驶入",
+      "pinyin": "gangkou",
+      "candidates": [
+        "港口",
+        "钢扣"
+      ],
+      "acceptable": [
+        "港口"
+      ],
+      "result": {
+        "choice": "钢扣",
+        "probabilities": {
+          "港口": 0.4214,
+          "钢扣": 0.5786
+        },
+        "elapsed_ms": 7.64,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "港口",
+        "probabilities": {
+          "钢扣": 0.1619,
+          "港口": 0.8381
+        },
+        "elapsed_ms": 7.45,
+        "backend": "laya"
+      },
+      "correct": false,
+      "order_stable": false
+    },
+    {
+      "context": "这条皮带使用耐用的",
+      "pinyin": "gangkou",
+      "candidates": [
+        "港口",
+        "钢扣"
+      ],
+      "acceptable": [
+        "钢扣"
+      ],
+      "result": {
+        "choice": "钢扣",
+        "probabilities": {
+          "港口": 0.1327,
+          "钢扣": 0.8673
+        },
+        "elapsed_ms": 8.31,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "钢扣",
+        "probabilities": {
+          "钢扣": 0.6796,
+          "港口": 0.3204
+        },
+        "elapsed_ms": 7.32,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "运动员打破了世界",
+      "pinyin": "jilu",
+      "candidates": [
+        "记录",
+        "纪录"
+      ],
+      "acceptable": [
+        "记录",
+        "纪录"
+      ],
+      "result": {
+        "choice": "纪录",
+        "probabilities": {
+          "记录": 0.1701,
+          "纪录": 0.8299
+        },
+        "elapsed_ms": 7.38,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "记录",
+        "probabilities": {
+          "纪录": 0.254,
+          "记录": 0.746
+        },
+        "elapsed_ms": 7.57,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": false
+    },
+    {
+      "context": "每位学生都应该遵守课堂",
+      "pinyin": "jilv",
+      "candidates": [
+        "纪律",
+        "几率"
+      ],
+      "acceptable": [
+        "纪律"
+      ],
+      "result": {
+        "choice": "纪律",
+        "probabilities": {
+          "纪律": 0.8763,
+          "几率": 0.1237
+        },
+        "elapsed_ms": 9.12,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "纪律",
+        "probabilities": {
+          "几率": 0.1191,
+          "纪律": 0.8809
+        },
+        "elapsed_ms": 8.68,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "手机收到一条银行转账",
+      "pinyin": "tongzhi",
+      "candidates": [
+        "同志",
+        "通知",
+        "统治"
+      ],
+      "acceptable": [
+        "通知"
+      ],
+      "result": {
+        "choice": "通知",
+        "probabilities": {
+          "同志": 0.0501,
+          "通知": 0.7903,
+          "统治": 0.1596
+        },
+        "elapsed_ms": 8.47,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "通知",
+        "probabilities": {
+          "统治": 0.0436,
+          "通知": 0.4841,
+          "同志": 0.4724
+        },
+        "elapsed_ms": 8.51,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "古代皇帝实行专制",
+      "pinyin": "tongzhi",
+      "candidates": [
+        "通知",
+        "同志",
+        "统治"
+      ],
+      "acceptable": [
+        "统治"
+      ],
+      "result": {
+        "choice": "统治",
+        "probabilities": {
+          "通知": 0.0092,
+          "同志": 0.0428,
+          "统治": 0.948
+        },
+        "elapsed_ms": 9.36,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "统治",
+        "probabilities": {
+          "统治": 0.9318,
+          "同志": 0.0644,
+          "通知": 0.0038
+        },
+        "elapsed_ms": 8.75,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": true
+    },
+    {
+      "context": "新闻报道必须尊重",
+      "pinyin": "shishi",
+      "candidates": [
+        "事实",
+        "实时",
+        "实施"
+      ],
+      "acceptable": [
+        "事实"
+      ],
+      "result": {
+        "choice": "实时",
+        "probabilities": {
+          "事实": 0.1551,
+          "实时": 0.4837,
+          "实施": 0.3612
+        },
+        "elapsed_ms": 8.44,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "实时",
+        "probabilities": {
+          "实施": 0.2423,
+          "实时": 0.5132,
+          "事实": 0.2445
+        },
+        "elapsed_ms": 8.57,
+        "backend": "laya"
+      },
+      "correct": false,
+      "order_stable": true
+    },
+    {
+      "context": "高铁到站以后，请拿好你的",
+      "pinyin": "xingli",
+      "candidates": [
+        "行礼",
+        "行李"
+      ],
+      "acceptable": [
+        "行李"
+      ],
+      "result": {
+        "choice": "行李",
+        "probabilities": {
+          "行礼": 0.3596,
+          "行李": 0.6404
+        },
+        "elapsed_ms": 9.73,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "行礼",
+        "probabilities": {
+          "行李": 0.3763,
+          "行礼": 0.6237
+        },
+        "elapsed_ms": 8.96,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": false
+    },
+    {
+      "context": "学生见到老师，恭敬地鞠躬",
+      "pinyin": "xingli",
+      "candidates": [
+        "行李",
+        "行礼"
+      ],
+      "acceptable": [
+        "行礼"
+      ],
+      "result": {
+        "choice": "行礼",
+        "probabilities": {
+          "行李": 0.2197,
+          "行礼": 0.7803
+        },
+        "elapsed_ms": 9.39,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "行李",
+        "probabilities": {
+          "行礼": 0.3925,
+          "行李": 0.6075
+        },
+        "elapsed_ms": 9.89,
+        "backend": "laya"
+      },
+      "correct": true,
+      "order_stable": false
+    },
+    {
+      "context": "项目计划已经开始",
+      "pinyin": "shishi",
+      "candidates": [
+        "事实",
+        "实时",
+        "实施"
+      ],
+      "acceptable": [
+        "实施"
+      ],
+      "result": {
+        "choice": "实时",
+        "probabilities": {
+          "事实": 0.1729,
+          "实时": 0.5535,
+          "实施": 0.2736
+        },
+        "elapsed_ms": 9.28,
+        "backend": "laya"
+      },
+      "reversed": {
+        "choice": "实时",
+        "probabilities": {
+          "实施": 0.174,
+          "实时": 0.514,
+          "事实": 0.3121
+        },
+        "elapsed_ms": 9.12,
+        "backend": "laya"
+      },
+      "correct": false,
+      "order_stable": true
+    }
+  ]
+}

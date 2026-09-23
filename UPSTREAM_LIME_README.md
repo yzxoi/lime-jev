@@ -1,0 +1,181 @@
+# LIME
+
+llm 驱动的输入法。目前支持拼音。
+
+llm 常用的文本生成方式是自回归，也就是预测下一个词（token）的所有可能，然后通过某种方式采样选择某个可能，追加到模型输入，然后再次预测。这个项目，把词可能的选择采样交给了用户拼音，利用用户拼音来辅助采样。
+
+使用小型大模型 Qwen3-0.6B-IQ4_XS ，兼顾速度和联想能力，打字时速度和普通引擎基本无异。
+
+python 版本的见[python 分支](https://github.com/xushengfeng/lime/tree/python)，此版本用 ts 重写。
+
+> [!CAUTION]
+> 本项目的结构是运行一个 ai 服务器，输入法前端发送按键数据到服务器计算，然后返回你选择的文字\
+> Rime 输入法前端可以使用 HiAE 对 `/candidates` 和 `/commit` 的请求与响应做加密认证\
+> 你的按键输入仍然可能包括了你大部分隐私，请不要把服务器暴露在公网或不可信局域网\
+> 如果关闭 HiAE 或使用开发 curl 示例，请只在本机可信环境中调试
+
+## 运行
+
+需要有 deno.js 运行时，见[官网](https://deno.com/)
+
+下载本项目，建议通过命令`git clone https://github.com/xushengfeng/lime`，后续可以获取更新，当然也可以下载压缩包
+
+建议切换到某个tag使用，或者在release上下载某个tag，这些tag是验证过的版本而不是中途开发可能存在问题的代码。
+
+### 安装依赖
+
+```shell
+deno install
+```
+
+### 下载模型
+
+```shell
+git clone https://www.modelscope.cn/unsloth/Qwen3-0.6B-GGUF.git
+```
+
+模型文件夹的位置和项目应该是同级的，当然你也可以修改代码
+
+### 开启服务器
+
+```shell
+deno serve -A --port 5000 server.ts
+```
+
+创建密钥，一定程度上防止被滥用或隐私泄露
+
+```shell
+deno run -A key.ts
+```
+
+如果只是先看看这个项目的效果，可以跳转到下面的[说明](#前端)
+
+## 作为输入法
+
+这里使用[rime](https://rime.im/)作为前端。
+
+复制项目 rime 文件夹里面的内容到你的 rime 输入法配置里面。可以修改`default.yaml`的`schema_list`，添加`-  schema: llm`，或者创建`default.custom.yaml`，内容如下：
+
+```yaml
+patch:
+    schema_list/+:
+        - schema: llm
+```
+
+总而言之，在rime里面启用`llm`这个schema。
+
+确保系统安装了 [curl](https://curl.se/download.html)，大部分系统如Windows（win10 1803+）、Linux、macOS 都自带了。
+
+创建密钥`deno run -A key.ts`，只需要创建一次，把输出的密钥改写在`llm_pinyin.lua`的`key`变量里面。
+
+默认开启 HiAE 加密。还需要把`llm_pinyin.lua`中的`hiae_payload`改成 lime 项目里`hiae_payload.ts`的绝对路径，例如`/home/me/lime/hiae_payload.ts`。加密模式下 Lua 端不会发送明文 bearer key，服务端会用`key.txt`里保存的 key hash 验证并解密请求。
+
+如果需要临时回退到旧的明文 bearer 请求，可以把`llm_pinyin.lua`里的`enable_hiae`改成`false`。
+
+开启服务器，切换到 llm 拼音输入法即可使用。
+
+注意，并不能与你其他的 rime 输入法结合，只能作为一个新的 rime 输入法。
+
+## 特性
+
+除了 ai 优化，还有一些输入法特性：
+
+- 模糊音，可自定义转化表
+- 双拼（自然码、搜狗、微软、小鹤、智能 ABC、拼音加加、紫光，自定义）
+- `'`号分割拼音
+
+## 配置
+
+复制`config.ts`为`user_config.ts`，在`user_config.ts`里面修改配置。
+
+比如可以把`shuangpin`的值改成`false`或者改成其他双拼方案。
+
+建议使用现代的代码编辑器修改，比如 vscode、zed、neovim 等，它们提供代码检查，改配置时可以避免错误。
+
+## 现状
+
+长句的输入可能并不智能。
+
+输入太快可能会漏字母。
+
+没有保存数据的功能，也没有生词记录，所以服务器重启后会丢失记忆。
+
+## 理解与展望
+
+模型有的地方让人惊喜，有些候选又不合适地排在后面。总的来说，联想能力不输以前传统大厂的输入法，利好开源输入法，但 AI 时代竞争会更激烈，大厂的或者新加入的输入法会更智能。
+
+从拼音引导文字生成来看，人对语音的理解不是顺序的，是大体上顺序，小范围逆序，一些音的识别在后面才会有明确的结果或纠正。现在这个项目只能对部分置信度高的候选生成长词组，对于更长的长句，没有一定的把握是不会生成的。我了解到 fim 补全模式，这可以是一个方向，用它来表示没有把握的候选，但并不能提供拼音信息。有几种方向（AI 也告诉我了一些，我不是专业的，仅抛砖引玉），可以修改 mask，让拼音候选匹配的文字权重加大，占用位置编码，但不具体下来；类似翻译模型，前后关系在模型内部处理。为了更好补全，可以微调模型，减少其在指令遵循、编程相关的能力，提高其文学能力。另外发现不同的 token 粒度对置信度影响较大，在“ta de”中，“他的”是一个 token，但“他”和“的”各是一个 token，“他的”排名靠后，但“他”\*“的”的置信度还会更低，所以现在输入法采取长词优先，尽管这个不符合置信度排序。
+
+在应用方面来说，不同焦点的切换应该发生给模型以提示，否则容易串。删除或者光标改变也应该考虑。这些输入法框架应该具有相关功能，我研究一下。
+
+## 开发
+
+Rime 前端默认使用 HiAE 加密。下面的 curl 示例仍保留为本机开发调试用的明文接口，需要传入 bearer key。
+
+可以发送按键让引擎分析
+
+```shell
+curl --request POST \
+  --url http://127.0.0.1:5000/candidates \
+  --header 'content-type: application/json' \
+  --header 'Authorization: Bearer your key' \
+  --data '{
+  "keys": "nihaoshijie"
+}'
+```
+
+返回
+
+```json
+{
+    "candidates": [
+        {
+            "pinyin": ["ni", "hao", "shi", "jie"],
+            "score": 1.1879427571978856e-13,
+            "word": "你好世界"
+        }
+    ]
+}
+```
+
+选好词后，发送，将作为上下文记录
+
+```shell
+curl --request POST \
+  --url http://127.0.0.1:5000/commit \
+  --header 'content-type: application/json' \
+  --header 'Authorization: Bearer your key' \
+  --data '{
+  "text": "你好世界"
+}'
+```
+
+### 其他输入方案
+
+添加类似`key_to_pinyin`的函数，用于把输入按键转换为文字索引，放在`key_map`文件夹下。添加类似`load_pinyin`的函数，提供把文字转为索引的方法。
+
+## 测试
+
+用deno运行`test/test_text.ts`，将会按照输入较长句子的拼音，然后去统计其索引、按键数、提交数量等记录下来，还提供了一个计算的交互方式，根据按键速度（kpm）等计算理论上的打字速度（cpm）等数据。
+
+## 统计
+
+服务器会尝试统计按键的速度（按照相邻请求来计算）、实际输入文字时间、查找候选的时间等，通过`/inputlog`可以获取，可以使用中位数等或者平均数计算你自己相关的打字数据。
+
+## 高级配置
+
+### 使用ollama的模型
+
+添加`import { getOllamaModel } from "./utils/load_from_ollama.ts";`
+
+`initLIME`的参数中设置`modelPath`，添加`getOllamaModel('模型名称')`，名称为`ollama list`命令列出的模型名称。
+
+## 前端
+
+执行`deno run install_interface`和`deno run build_interface`
+
+重启服务器
+
+访问 http://127.0.0.1:5000/demo.html?passwd=你的密码 将有个模拟平时输入法界面的页面
+
+其他界面在 http://127.0.0.1:5000 可以导航，如上下文获取、输入统计计算等

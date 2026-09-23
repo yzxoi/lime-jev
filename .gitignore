@@ -2,3 +2,16 @@ key.txt
 node_modules
 user_config.ts
 userword/preload_word.txt
+.upstream/
+.venv/
+.runtime/
+models/
+.tools/
+__pycache__/
+.pytest_cache/
+*.pyc
+.DS_Store
+interface/dist/
+.env
+.env.*
+!.env.example

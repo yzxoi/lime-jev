@@ -21,8 +21,10 @@ export function key_to_pinyin_part(
 	k: string,
 	shuangpinMap: ReturnType<typeof generate_shuang_pinyin>,
 ): ZiIndAndKey[] {
-	for (let plen = 0; plen < k.length; plen++) {
-		const xk = k.slice(0, plen + 1);
+	// Keep the longest unfinished syllable together ("yo" -> you/yong),
+	// rather than treating every leading letter as a separate abbreviation.
+	for (let plen = k.length; plen > 0; plen--) {
+		const xk = k.slice(0, plen);
 		let nxk = xk;
 		const ll: ZiIndAndKey[] = [];
 		for (const [i, pys] of Object.entries(shuangpinMap)) {
@@ -54,7 +56,6 @@ export function key_to_pinyin_part(
 				});
 			}
 		}
-		k = k.slice(nxk.length);
 		if (ll.length) {
 			return ll;
 		}
@@ -131,10 +132,27 @@ export function keys_to_pinyin(keys: string, op?: PinyinToKeyOptions): ZiIndL {
 			l.push([{ ind: "*", key: split_key, preeditShow: "*" }]);
 			k = k.slice(1);
 		}
-		const { restK: nk, l: ll, matchMore } = tryMatch(k);
+		// A trailing unfinished syllable is one unit: qio is a prefix of qiong,
+		// not qi + o. Keep abbreviation splitting for strings such as nh.
+		if (!op?.shuangpin && k && !pinyin_k_l.includes(k)) {
+			const completions = pinyin_k_l.filter((py) => py.startsWith(k));
+			if (completions.length) {
+				l.push(completions.map((ind) => ({ ind, key: k, preeditShow: k })));
+				k = "";
+				continue;
+			}
+		}
+		let { restK: nk, l: ll, matchMore } = tryMatch(k);
 
 		if (matchMore) {
-			ll.push(...key_to_pinyin_part(k, shuangpinMap));
+			const partial = key_to_pinyin_part(k, shuangpinMap);
+			const consumed = partial[0]?.key.length ?? 0;
+			if (consumed > k.length - nk.length) {
+				ll = partial;
+				nk = k.slice(consumed);
+			} else {
+				ll.push(...partial);
+			}
 		}
 		k = k === nk ? k.slice(1) : nk;
 		if (ll.length) l.push(ll);

@@ -40,9 +40,10 @@ class Lock {
 	}
 
 	async lock() {
-		await this.acquire();
+		const previous = this.pm;
 		const p = Promise.withResolvers<void>();
-		this.pm = p.promise;
+		this.pm = (previous ?? Promise.resolve()).then(() => p.promise);
+		await previous;
 
 		return {
 			release: () => {
@@ -55,13 +56,14 @@ class Lock {
 export async function loadModel(op?: {
 	modelPath?: string;
 	contextSize?: number;
+	gpu?: false | "metal" | "auto";
 }) {
 	const modelPath =
 		op?.modelPath ??
 		path.join(__dirname, "../Qwen3-0.6B-GGUF/Qwen3-0.6B-IQ4_XS.gguf");
 
 	const llama = await getLlama({
-		gpu: false,
+		gpu: op?.gpu ?? false,
 	});
 
 	console.log("加载模型", modelPath);
@@ -115,6 +117,7 @@ export class LIME {
 	private tokenIndex = 0;
 
 	private last_result: Map<ExToken, number> | undefined;
+	private branchProbCache = new Map<string, Map<ExToken, number>>();
 	/** 长句补全，记录拼音和token对 */
 	private longSentenceCache: {
 		py: ZiIndL;
@@ -268,6 +271,7 @@ export class LIME {
 		let nt = newT;
 
 		this.longSentenceCache = [];
+		this.branchProbCache.clear();
 
 		if (update) {
 			if (text.startsWith(this.last_context_data.context)) {
@@ -294,8 +298,8 @@ export class LIME {
 		const pre = to_run.slice(0, -1);
 		const last = to_run[to_run.length - 1];
 		const { release } = await this.modelEvalLock.lock();
-		// 强制commit耗时的部分为异步执行，避免请求阻塞
-		(async () => {
+		// The caller owns the request queue; complete the update before returning.
+		try {
 			await this.fastTryOmitContext(pre.length + 1);
 			// todo 根据缓存判断，比如长句实际上已经近似提交了
 			await this.sequence.eraseContextTokenRanges([
@@ -321,8 +325,9 @@ export class LIME {
 				this.last_result?.set(i, 0);
 			}
 			this.lastCommitOffset = this.sequence.contextTokens.length;
+		} finally {
 			release();
-		})();
+		}
 
 		this.omitContext.reset();
 
@@ -332,9 +337,19 @@ export class LIME {
 	reset_context = async () => {
 		await this.modelEvalLock.acquire();
 		this.last_context_data.context = "";
-		this.userTokens.clear();
+		this.longSentenceCache = [];
+		this.branchProbCache.clear();
 		await this.sequence.clearHistory();
 		await this.init_ctx();
+	};
+
+	/** Replace the textual prefix without clearing the user's vocabulary. */
+	set_context = async (text: string) => {
+		await this.reset_context();
+		if (text) {
+			await this.commit(text);
+			await this.modelEvalLock.acquire();
+		}
 	};
 
 	getEvalResult = async () => {
@@ -696,6 +711,96 @@ export class LIME {
 			console.log("is empty");
 		}
 		return { candidates: tc };
+	};
+
+	/**
+	 * Short-phrase beam search. A single vocabulary token (e.g. 邮箱) must not
+	 * suppress a more likely multi-token phrase (油 + 箱 / 又 + 想).
+	 * Scores are path likelihoods; they are not calibrated correctness estimates.
+	 */
+	contextual_candidates = async (input: ZiIndL): Promise<Result> => {
+		if (input.length === 0) return { candidates: [] };
+		if (input.length > 4) return this.single_ci(input);
+		await this.modelEvalLock.acquire();
+		const { release } = await this.modelEvalLock.lock();
+		try {
+			await this.fastTryOmitContext(input.length);
+			if (!this.last_result) return { candidates: [] };
+			this.longSentenceCache = [];
+			const erase = () => this.sequence.eraseContextTokenRanges([
+				{ start: this.lastCommitOffset, end: this.sequence.contextTokens.length },
+			]);
+			await erase();
+			type Path = { tokens: ExToken[]; matched: ZiIndAndKey[]; score: number };
+			const found = new Map<string, Candidate>();
+			const pending: Path[] = [];
+			const matches = (remaining: ZiIndL, probabilities: Map<ExToken, number>) => {
+				const tokenIds = new Set<number>();
+				for (const py of remaining[0] ?? []) {
+					for (const id of this.first_pinyin_token.get(py.ind) ?? []) tokenIds.add(id);
+				}
+				const result: { token: ExToken; py: ZiIndAndKey[]; probability: number }[] = [];
+				for (const [token, probability] of probabilities) {
+					if (!tokenIds.has(token) || !Number.isFinite(probability) || probability <= 0) continue;
+					const spelling = this.token_pinyin_map.get(token);
+					if (!spelling) continue;
+					const py = ziid_in_ziid(remaining, spelling);
+					if (!py) continue;
+					const word = this.detoken([token]);
+					if (!word || /^\s/.test(word) || word === py[0].ind) continue;
+					result.push({ token, py, probability });
+				}
+				return result.sort((a, b) => b.probability - a.probability);
+			};
+			const add = (branch: Path) => {
+				const remaining = input.slice(branch.matched.length);
+				const word = this.detoken(branch.tokens);
+				const key = `${word}:${branch.matched.length}`;
+				if ((found.get(key)?.score ?? -1) < branch.score) {
+					found.set(key, {
+						word, score: branch.score,
+						pinyin: branch.matched.map((v) => v.ind),
+						remainkeys: remaining.map((v) => v[0].ind),
+						preedit: branch.matched.map((v) => v.preeditShow).join(" ") + (remaining.length ? " " : ""),
+						consumedkeys: branch.matched.map((v) => v.key).join("").length,
+					});
+				}
+				if (remaining.length) pending.push(branch);
+			};
+			for (const match of matches(input, this.last_result)) {
+				add({ tokens: [match.token], matched: match.py, score: match.probability });
+			}
+			for (let step = 0; step < 4 && pending.length; step++) {
+				pending.sort((a, b) => b.score - a.score);
+				const branch = pending.shift()!;
+				const bestFull = Math.max(0, ...Array.from(found.values()).filter((v) => v.pinyin.length === input.length).map((v) => v.score));
+				// A prefix likelihood is an upper bound on any of its continuations.
+				if (bestFull > 0 && branch.score < bestFull * 0.2) break;
+				const cacheKey = branch.tokens.join(",");
+				let next = this.branchProbCache.get(cacheKey);
+				if (!next) {
+					await erase();
+					const tokens = this.exTokens(branch.tokens);
+					const result = await this.sequence.controlledEvaluate([
+						...tokens.slice(0, -1),
+						[tokens.at(-1)!, { generateNext: { probabilities: true, options: { topK: Infinity } } }],
+					]);
+					next = result.at(-1)?.next.probabilities;
+					if (next) {
+						this.branchProbCache.set(cacheKey, next);
+						if (this.branchProbCache.size > 12) this.branchProbCache.delete(this.branchProbCache.keys().next().value!);
+					}
+				}
+				if (!next) continue;
+				for (const match of matches(input.slice(branch.matched.length), next).slice(0, 3)) {
+					add({ tokens: [...branch.tokens, match.token], matched: [...branch.matched, ...match.py], score: branch.score * match.probability });
+				}
+			}
+			await erase();
+			return { candidates: Array.from(found.values()).sort((a, b) => b.pinyin.length - a.pinyin.length || b.score - a.score) };
+		} finally {
+			release();
+		}
 	};
 
 	init_ctx = async () => {

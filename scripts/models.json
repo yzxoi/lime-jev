@@ -1,0 +1,59 @@
+[
+  {
+    "repo": "aac6fef/laya-multilingual-mlx",
+    "revision": "f2b4faf51023039425946074e2cf1361d2db11d5",
+    "file": "encoder/config.json",
+    "folder": "laya",
+    "size": 1938,
+    "sha256": "83f6916d13ef0f556ac461f28308dc2bffa7ebeadee8ec9e2db5812020ea5bb4"
+  },
+  {
+    "repo": "aac6fef/laya-multilingual-mlx",
+    "revision": "f2b4faf51023039425946074e2cf1361d2db11d5",
+    "file": "mlx_config.json",
+    "folder": "laya",
+    "size": 316,
+    "sha256": "20ec723e1365a268597cc7e8cd39495c5e2eb58311b925f8e8c165ec5855cc28"
+  },
+  {
+    "repo": "aac6fef/laya-multilingual-mlx",
+    "revision": "f2b4faf51023039425946074e2cf1361d2db11d5",
+    "file": "model.safetensors",
+    "folder": "laya",
+    "size": 643835426,
+    "sha256": "7fc5834af4d8fdfb268d272a9d1a66e5819a0daac98241651c4c888cc43adff1"
+  },
+  {
+    "repo": "aac6fef/laya-multilingual-mlx",
+    "revision": "f2b4faf51023039425946074e2cf1361d2db11d5",
+    "file": "rl_agent_config.json",
+    "folder": "laya",
+    "size": 473,
+    "sha256": "9a669a70961064c3c6cc76d2afb8bc5fb10dcd8349bb66e5f7b9b1afb74440d5"
+  },
+  {
+    "repo": "aac6fef/laya-multilingual-mlx",
+    "revision": "f2b4faf51023039425946074e2cf1361d2db11d5",
+    "file": "tokenizer/tokenizer.json",
+    "folder": "laya",
+    "size": 34363188,
+    "sha256": "609d8f4c067cd3950f88594c5a802616cea245823836ef5848ee4fc40aab5b6f"
+  },
+  {
+    "repo": "aac6fef/laya-multilingual-mlx",
+    "revision": "f2b4faf51023039425946074e2cf1361d2db11d5",
+    "file": "tokenizer/tokenizer_config.json",
+    "folder": "laya",
+    "size": 524,
+    "sha256": "6c6b2d8e3c84ce0e671c129cd6b374b235d6f9863042a5836358d00a89bbb5a1"
+  },
+  {
+    "repo": "unsloth/Qwen3-0.6B-GGUF",
+    "revision": "50968a4468ef4233ed78cd7c3de230dd1d61a56b",
+    "file": "Qwen3-0.6B-IQ4_XS.gguf",
+    "folder": "lime",
+    "size": 367804096,
+    "sha256": "dacc1fe1dc6f4799f366ac3385299f71c7e02c58b8702448a174f14d91b1c64d",
+    "fallback": "https://www.modelscope.cn/models/unsloth/Qwen3-0.6B-GGUF/resolve/master/Qwen3-0.6B-IQ4_XS.gguf"
+  }
+]
