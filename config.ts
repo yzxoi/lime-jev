@@ -24,26 +24,6 @@ const config: Config = {
 	key2ZiInd: (key: string) =>
 		keys_to_pinyin(key, {
 			shuangpin: false,
-			fuzzy: {
-				initial: {
-					c: "ch",
-					z: "zh",
-					s: "sh",
-					ch: "c",
-					zh: "z",
-					sh: "s",
-				},
-				final: {
-					an: "ang",
-					ang: "an",
-					en: "eng",
-					eng: "en",
-					in: "ing",
-					ing: "in",
-					uan: "uang",
-					uang: "uan",
-				},
-			},
 		}),
 	userWordsPath: path.join(__dirname, "userword/preload_word.txt"),
 };

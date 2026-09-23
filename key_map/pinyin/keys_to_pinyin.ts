@@ -12,6 +12,7 @@ import {
 
 export type PinyinToKeyOptions = {
 	shuangpin?: keyof typeof shuangpinMaps | false | ShuangpinMap;
+	/** Exact spelling by default; fuzzy substitutions require explicit opt-in. */
 	fuzzy?: FuzzyPinyinConfig;
 };
 
@@ -92,7 +93,7 @@ export function keys_to_pinyin(keys: string, op?: PinyinToKeyOptions): ZiIndL {
 		}
 		for (const { i, pinyin } of kl) {
 			if (k.startsWith(i)) {
-				const pinyin_variants = generate_fuzzy_pinyin(pinyin, op?.fuzzy);
+				const pinyin_variants = generate_fuzzy_pinyin(pinyin, op?.fuzzy ?? {});
 
 				let ni = i;
 				const next = k.at(i.length);

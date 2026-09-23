@@ -58,6 +58,8 @@ xcode-select --install
 
 如果方案菜单里找不到“Lime · 本地语境”，运行 `./lime-jev install-rime` 重新部署，然后再次打开方案菜单。若当前不是中文模式，按 Shift 切回中文。同一应用内点击切换输入框后，按 **Control + Shift + Backspace** 清空旧语境。
 
+**默认关闭模糊拼音。** 完整输入 `zhezhi` 只按 `zhe zhi` 匹配，不再同时匹配 `zhe zi`。`z/zh、c/ch、s/sh` 与 `an/ang、en/eng、in/ing、uan/uang` 都不再互换；尚未输入完整音节时的前缀补全仍保留，例如 `zhezh` 可以补全到 `zhe zhi`。旧版用户执行 `git pull --ff-only` 和 `./lime-jev restart` 即可生效，不需要重装模型或修改鼠须管词典。
+
 已经安装 v0.1.0 的用户若没有 `use` 命令，可以先 `git pull --ff-only` 更新 main 分支，或直接用上述网页方式设置。若检出的是发布标签、处于 detached HEAD，则先 `git switch main` 再更新。
 
 ### 更新候选延迟修复
